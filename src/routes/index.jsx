@@ -1,11 +1,9 @@
 import React from 'react';
 
-import lazyImport from '~/utils/lazyImport';
-
-const { ProtectedRoutes } = lazyImport(
-  () => import('./ProtectedRoutes'),
-  'ProtectedRoutes',
-);
+const ProtectedRoutes = React.lazy(async () => {
+  const component = await import('./ProtectedRoutes');
+  return component;
+});
 
 const AppRoutes = () => <ProtectedRoutes />;
 
