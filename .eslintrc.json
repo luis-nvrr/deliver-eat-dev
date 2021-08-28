@@ -18,6 +18,18 @@
     ],
     "rules": {
     "prettier/prettier": ["error"],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "no-param-reassign": [2, { "props": false }],
+    "react/jsx-props-no-spreading": ["off"]
+    },
+     "settings": {
+        "import/resolver": {
+            "alias": {
+                "map": [
+                    ["~", "./src"]
+                ],
+                "extensions": [".js", ".jsx"]
+            }
+        }
     }
 }
