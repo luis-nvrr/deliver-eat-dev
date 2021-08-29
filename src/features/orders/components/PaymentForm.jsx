@@ -12,15 +12,17 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 import React from 'react';
-import { BsCalendarFill, BsFillPersonFill } from 'react-icons/bs';
+import { BsFillPersonFill } from 'react-icons/bs';
 import { FaCcVisa } from 'react-icons/fa';
 import { ImKey } from 'react-icons/im';
 import { SiCashapp } from 'react-icons/si';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { addYears } from 'date-fns';
 
 const CSiCashapp = chakra(SiCashapp);
 const CFaCcVisa = chakra(FaCcVisa);
 const CBsFillPersonFill = chakra(BsFillPersonFill);
-const CBsCalendarFill = chakra(BsCalendarFill);
 const CImKey = chakra(ImKey);
 
 const PaymentForm = ({
@@ -31,6 +33,14 @@ const PaymentForm = ({
   setValue,
 }) => {
   const watchPaymentMethod = watch('paymentMethod');
+  const watchExpirationDate = watch('expirationDate');
+  const [startDate, setStartDate] = React.useState(null);
+
+  console.log(watchExpirationDate);
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    setValue('expirationDate', date, { shouldValidate: true });
+  };
 
   const handlePaymentMethodChange = (event) => {
     console.log(event.target.value);
@@ -182,12 +192,16 @@ const PaymentForm = ({
             isRequired
           >
             <FormLabel>Fecha de vencimiento</FormLabel>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none" color="gray.300">
-                <CBsCalendarFill color="gray.500" />
-              </InputLeftElement>
-              <Input type="date" {...register('expirationDate')} />
-            </InputGroup>
+            <DatePicker
+              selected={startDate}
+              onChange={handleDateChange}
+              minDate={new Date()}
+              maxDate={addYears(new Date(), 50)}
+              placeholderText="Seleccione una fecha"
+              dateFormat="dd/MM/yyyy h:mm aa"
+              isClearable
+              showMonthYearDropdown
+            />
             <FormErrorMessage>
               {errors?.expirationDate?.message
                 ? 'Debe ingresar la fecha de vencimiento'

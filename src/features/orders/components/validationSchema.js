@@ -89,10 +89,6 @@ const schema = yup.object().shape({
     is: 'programado',
     then: yup.string().required(),
   }),
-  shippingTime: yup.string().when('shippingMethod', {
-    is: 'programado',
-    then: yup.string().required(),
-  }),
 });
 
 export default schema;

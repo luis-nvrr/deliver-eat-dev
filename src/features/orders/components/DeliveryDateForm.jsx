@@ -1,26 +1,18 @@
 import {
-  chakra,
   FormControl,
   FormLabel,
   Heading,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Select,
   Stack,
   FormErrorMessage,
 } from '@chakra-ui/react';
 import React from 'react';
-import { BsClock } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { addDays } from 'date-fns';
-
-const CBsClock = chakra(BsClock);
+import { addMonths } from 'date-fns';
 
 const DeliveryDateForm = ({
-  register,
   errors,
   watch,
   clearErrors,
@@ -91,34 +83,17 @@ const DeliveryDateForm = ({
             <DatePicker
               selected={startDate}
               onChange={handleDateChange}
-              includeDates={[new Date(), addDays(new Date(), 1)]}
-              placeholderText="This only includes today and tomorrow"
-              timeInputLabel="Time:"
-              dateFormat="MM/dd/yyyy h:mm aa"
+              minDate={new Date()}
+              maxDate={addMonths(new Date(), 5)}
+              placeholderText="Ingrese una fecha"
+              timeInputLabel="Hora:"
+              dateFormat="dd/MM/yyyy h:mm aa"
               showTimeInput
+              isClearable
             />
             <FormErrorMessage>
               {errors?.shippingDate?.message
                 ? 'Debe ingresar una fecha de envio'
-                : false}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl
-            isInvalid={Boolean(errors?.shippingTime?.message)}
-            errortext={errors?.shippingTime?.message}
-            isRequired
-          >
-            <FormLabel>Hora</FormLabel>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none" color="gray.300">
-                <CBsClock color="gray.500" />
-              </InputLeftElement>
-              s
-              <Input type="time" {...register('shippingTime')} />
-            </InputGroup>
-            <FormErrorMessage>
-              {errors?.shippingTime?.message
-                ? 'Debe ingresar una hora de entrega'
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -129,7 +104,6 @@ const DeliveryDateForm = ({
 };
 
 DeliveryDateForm.propTypes = {
-  register: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   watch: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,

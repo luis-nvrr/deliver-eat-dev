@@ -99,7 +99,6 @@ const OrderForm = () => {
             />
             <Divider />
             <DeliveryDateForm
-              register={register}
               errors={errors}
               watch={watch}
               setValue={setValue}
