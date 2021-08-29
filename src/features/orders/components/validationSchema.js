@@ -2,7 +2,6 @@ import * as yup from 'yup';
 import valid from 'card-validator';
 
 const checkIfFilesAreTooBig = (file) => {
-  console.log('validando', file);
   if (file === null || file === undefined) {
     return true;
   }
@@ -20,7 +19,6 @@ const checkIfFilesAreTooBig = (file) => {
 };
 
 const checkIfFilesAreCorrectType = (file) => {
-  console.log('validando', file);
   if (file === null || file === undefined) {
     return true;
   }
@@ -35,8 +33,6 @@ const checkIfFilesAreCorrectType = (file) => {
 
   return false;
 };
-
-const dateRegex = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
 
 const schema = yup.object().shape({
   product: yup.string().required(),
@@ -57,9 +53,16 @@ const schema = yup.object().shape({
   destinationCity: yup.string().required(),
   destinationReference: yup.string().max(250),
   paymentMethod: yup.string().max(100).required(),
-  paymentAmount: yup.number().when('paymentMethod', {
+  paymentAmount: yup.string().when('paymentMethod', {
     is: 'efectivo',
-    then: yup.number().required(),
+    then: yup
+      .string()
+      .test(
+        'amount-validator',
+        'Monto incorrecto',
+        (value) => value > 0,
+      )
+      .required(),
   }),
   cardNumber: yup.string().when('paymentMethod', {
     is: 'visa',
@@ -68,7 +71,14 @@ const schema = yup.object().shape({
       .test(
         'test-number', // This is used internally by yup
         'Credit Card number is invalid', // Validation message
-        (value) => valid.number(value).isValid,
+        (value) => {
+          const number = valid.number(value);
+          console.log('validando', number);
+          if (!number.card) return false;
+          return (
+            number.card.type === 'visa' && number.isPotentiallyValid
+          );
+        },
       ) // Return true false based on validation
       .required(),
   }),
@@ -80,9 +90,16 @@ const schema = yup.object().shape({
     is: 'visa',
     then: yup.string().required(),
   }),
-  cvc: yup.number().when('paymentMethod', {
+  cvc: yup.string().when('paymentMethod', {
     is: 'visa',
-    then: yup.number().required(),
+    then: yup
+      .string()
+      .test(
+        'test-cvv',
+        'CVV is invalid',
+        (value) => valid.cvv(value).isValid,
+      )
+      .required(),
   }),
   shippingMethod: yup.string().max(100).required(),
   shippingDate: yup.string().when('shippingMethod', {

@@ -33,10 +33,8 @@ const PaymentForm = ({
   setValue,
 }) => {
   const watchPaymentMethod = watch('paymentMethod');
-  const watchExpirationDate = watch('expirationDate');
   const [startDate, setStartDate] = React.useState(null);
 
-  console.log(watchExpirationDate);
   const handleDateChange = (date) => {
     setStartDate(date);
     setValue('expirationDate', date, { shouldValidate: true });
@@ -44,7 +42,7 @@ const PaymentForm = ({
 
   const handlePaymentMethodChange = (event) => {
     console.log(event.target.value);
-    setValue('paymentAmount', 0, {
+    setValue('paymentAmount', '', {
       shouldValidate: false,
       shouldDirty: false,
       shouldTouch: false,
@@ -70,7 +68,7 @@ const PaymentForm = ({
       shouldDirty: false,
       shouldTouch: false,
     });
-    setValue('cvc', 0, {
+    setValue('cvc', '', {
       shouldValidate: false,
       shouldDirty: false,
       shouldTouch: false,
@@ -136,7 +134,7 @@ const PaymentForm = ({
           </InputGroup>
           <FormErrorMessage>
             {errors?.paymentAmount?.message
-              ? 'Debe ingresar un monto'
+              ? 'Debe ingresar un monto válido'
               : false}
           </FormErrorMessage>
         </FormControl>
@@ -199,13 +197,13 @@ const PaymentForm = ({
               minDate={new Date()}
               maxDate={addYears(new Date(), 50)}
               placeholderText="Seleccione una fecha"
-              dateFormat="dd/MM/yyyy h:mm aa"
+              dateFormat="dd/MM/yyyy"
               isClearable
               showMonthYearDropdown
             />
             <FormErrorMessage>
               {errors?.expirationDate?.message
-                ? 'Debe ingresar la fecha de vencimiento'
+                ? 'Debe ingresar una fecha de vencimiento válida'
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -227,7 +225,7 @@ const PaymentForm = ({
             </InputGroup>
             <FormErrorMessage>
               {errors?.cvc?.message
-                ? 'Debe ingresar el código CVC'
+                ? 'Debe ingresar un código CVC válido'
                 : false}
             </FormErrorMessage>
           </FormControl>
