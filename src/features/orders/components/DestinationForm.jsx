@@ -33,9 +33,11 @@ const DestinationForm = ({ register, errors }) => {
   };
 
   return (
-    <Stack direction="row" spacing={6}>
+    <Stack direction="row" paddingY={3} marginBottom={2}>
       <Stack direction="column">
-        <Heading color="gray.500">Dirección del comercio</Heading>
+        <Heading color="gray.500" size="lg">
+          Dirección del comercio
+        </Heading>
         <Stack paddingEnd={40} paddingY={3}>
           <Button
             borderRadius="lg"
@@ -156,7 +158,7 @@ const DestinationForm = ({ register, errors }) => {
 
 DestinationForm.propTypes = {
   register: PropTypes.func.isRequired,
-  errors: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default DestinationForm;

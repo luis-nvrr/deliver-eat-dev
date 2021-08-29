@@ -8,7 +8,7 @@ export default {
             name: 'John Kite',
             username: 'johnkite',
           }),
-        500,
+        1,
       ),
     ),
 };

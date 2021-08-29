@@ -94,9 +94,13 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
       justifyContent="flex-start"
       spacing={6}
       position="relative"
+      paddingY={3}
+      marginBottom={2}
     >
       <Stack spacing={3}>
-        <Heading color="gray.500">Sobre el producto</Heading>
+        <Heading color="gray.500" size="lg">
+          Sobre el producto
+        </Heading>
         <FormControl
           isInvalid={Boolean(errors?.product?.message)}
           errortext={errors?.product?.message}
@@ -124,7 +128,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
           errortext={errors?.image?.message}
         >
           <Button
-            width="30%"
+            width="50%"
             colorScheme="orange"
             leftIcon={<Icon as={CFiImage} />}
           >
@@ -162,7 +166,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
               paddingX={1}
               paddingY={1}
               position="absolute"
-              right={9}
+              right={-1}
               spacing={2}
               top={-1}
               zIndex={1}
@@ -195,7 +199,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
 
 ProductForm.propTypes = {
   register: PropTypes.func.isRequired,
-  errors: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
   setValue: PropTypes.func.isRequired,
   watch: PropTypes.func.isRequired,
 };

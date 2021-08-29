@@ -36,6 +36,8 @@ const checkIfFilesAreCorrectType = (file) => {
   return false;
 };
 
+const dateRegex = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
+
 const schema = yup.object().shape({
   product: yup.string().required(),
   image: yup

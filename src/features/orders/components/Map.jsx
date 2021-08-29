@@ -7,6 +7,20 @@ import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const MyMap = ({ marker, onMarkerDragEnd }) => (
+  <LoadScript googleMapsApiKey="AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI">
+    <GoogleMap center={marker} zoom={15}>
+      <Marker
+        key={12345}
+        position={marker}
+        onDragEnd={onMarkerDragEnd}
+        draggable
+      />
+      <></>
+    </GoogleMap>
+  </LoadScript>
+);
+
 const Map = ({ setAddress }) => {
   const center = { lat: -31.427556, lng: -64.1882 };
   const [marker] = React.useState(center);
@@ -26,19 +40,15 @@ const Map = ({ setAddress }) => {
     console.log(street, number, city);
   };
 
-  return (
-    <LoadScript googleMapsApiKey="AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI">
-      <GoogleMap center={center} zoom={15}>
-        <Marker
-          key={12345}
-          position={marker}
-          onDragEnd={onMarkerDragEnd}
-          draggable
-        />
-        <></>
-      </GoogleMap>
-    </LoadScript>
-  );
+  return <MyMap marker={marker} onMarkerDragEnd={onMarkerDragEnd} />;
+};
+
+MyMap.propTypes = {
+  marker: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  }).isRequired,
+  onMarkerDragEnd: PropTypes.func.isRequired,
 };
 
 Map.propTypes = {

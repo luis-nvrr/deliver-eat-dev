@@ -2,7 +2,7 @@ import {
   Button,
   Center,
   Divider,
-  Grid,
+  Flex,
   Heading,
   Stack,
   useToast,
@@ -27,7 +27,6 @@ const OrderForm = () => {
     setValue,
     watch,
     clearErrors,
-    reset,
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -61,66 +60,66 @@ const OrderForm = () => {
   };
 
   return (
-    <Grid
-      gap={6}
-      templateColums="repeat(auto-fill, minmax(256px, 1fr))"
-      width="100%"
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
     >
-      <Stack
-        spacing={6}
-        padding={8}
-        backgroundColor="whiteAlpha.500"
-        boxShadow="lg"
-        borderRadius="xl"
-        direction="row"
-        justifyContent="center"
-        alignItems="flex-start"
-      >
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Heading color="black.500">Registrar nuevo pedido</Heading>
-          <Divider />
-          <ProductForm
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            clearErrors={clearErrors}
-            watch={watch}
-          />
-          <Divider />
-          <OriginForm register={register} errors={errors} />
-          <Divider />
-          <DestinationForm register={register} errors={errors} />
-          <Divider />
-          <PaymentForm
-            register={register}
-            errors={errors}
-            watch={watch}
-            clearErrors={clearErrors}
-            setValue={setValue}
-          />
-          <Divider />
-          <DeliveryDateForm
-            register={register}
-            errors={errors}
-            watch={watch}
-            setValue={setValue}
-            clearErrors={clearErrors}
-            reset={reset}
-          />
-          <Center>
-            <Button
-              borderRadius="lg"
-              type="submit"
-              variant="solid"
-              colorScheme="orange"
-              width="xs"
-            >
-              Confirmar Pedido
-            </Button>
-          </Center>
-        </form>
-      </Stack>
-    </Grid>
+      <Center paddingY={6} maxWidth="6xl">
+        <Stack
+          flexDirection="column"
+          spacing={6}
+          backgroundColor="whiteAlpha.500"
+          boxShadow="lg"
+          borderRadius="3xl"
+          alignItems="center"
+          justifyContent="center"
+          paddingY={6}
+          width="2xl"
+        >
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <Heading color="black.500">Pedido de lo que sea</Heading>
+            <ProductForm
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+            />
+            <Divider />
+            <OriginForm register={register} errors={errors} />
+            <Divider />
+            <DestinationForm register={register} errors={errors} />
+            <Divider />
+            <PaymentForm
+              register={register}
+              errors={errors}
+              watch={watch}
+              clearErrors={clearErrors}
+              setValue={setValue}
+            />
+            <Divider />
+            <DeliveryDateForm
+              register={register}
+              errors={errors}
+              watch={watch}
+              setValue={setValue}
+              clearErrors={clearErrors}
+            />
+            <Center>
+              <Button
+                borderRadius="lg"
+                type="submit"
+                variant="solid"
+                colorScheme="orange"
+                width="xs"
+              >
+                Confirmar Pedido
+              </Button>
+            </Center>
+          </form>
+        </Stack>
+      </Center>
+    </Flex>
   );
 };
 

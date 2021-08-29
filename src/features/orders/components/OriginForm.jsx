@@ -20,8 +20,10 @@ import PropTypes from 'prop-types';
 const CFiMapPin = chakra(FiMapPin);
 
 const OriginForm = ({ register, errors }) => (
-  <Stack direction="column">
-    <Heading color="gray.500">Dirección de entrega</Heading>
+  <Stack direction="column" paddingY={3} marginBottom={2}>
+    <Heading color="gray.500" size="lg">
+      Dirección de entrega
+    </Heading>
     <FormControl
       isInvalid={Boolean(errors?.originStreet?.message)}
       errortext={errors?.originStreet?.message}
@@ -102,7 +104,7 @@ const OriginForm = ({ register, errors }) => (
 
 OriginForm.propTypes = {
   register: PropTypes.func.isRequired,
-  errors: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default OriginForm;

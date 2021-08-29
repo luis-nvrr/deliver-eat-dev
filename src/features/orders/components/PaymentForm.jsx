@@ -81,8 +81,12 @@ const PaymentForm = ({
       direction="column"
       alignItems="flex-start"
       justifyContent="flex-start"
+      paddingY={3}
+      marginBottom={2}
     >
-      <Heading color="gray.500">Sobre el pago</Heading>
+      <Heading size="lg" color="gray.500">
+        Sobre el pago
+      </Heading>
       <FormControl
         isInvalid={Boolean(errors?.paymentMethod?.message)}
         errortext={errors?.paymentMethod?.message}
@@ -220,7 +224,7 @@ const PaymentForm = ({
 
 PaymentForm.propTypes = {
   register: PropTypes.func.isRequired,
-  errors: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
   watch: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   setValue: PropTypes.func.isRequired,
