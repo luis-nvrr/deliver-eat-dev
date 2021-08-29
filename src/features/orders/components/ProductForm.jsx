@@ -95,10 +95,11 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
       spacing={6}
       position="relative"
       paddingY={3}
+      paddingX={6}
       marginBottom={2}
     >
       <Stack spacing={3}>
-        <Heading color="gray.500" size="lg">
+        <Heading color="gray.500" fontSize={[20, 22, 25]}>
           Sobre el producto
         </Heading>
         <FormControl
@@ -128,7 +129,6 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
           errortext={errors?.image?.message}
         >
           <Button
-            width="50%"
             colorScheme="orange"
             leftIcon={<Icon as={CFiImage} />}
           >

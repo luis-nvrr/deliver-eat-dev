@@ -16,7 +16,7 @@ const HomeScreen = () => (
       paddingX={6}
       paddingY={6}
     >
-      <Heading color="primary.500" fontSize="4xl">
+      <Heading color="primary.500" fontSize={[20, 30, 40]}>
         ¡Pedí lo que quieras!
       </Heading>
     </Flex>

@@ -91,10 +91,11 @@ const PaymentForm = ({
       direction="column"
       alignItems="flex-start"
       justifyContent="flex-start"
-      paddingY={3}
+      paddingY={1}
+      paddingX={6}
       marginBottom={2}
     >
-      <Heading size="lg" color="gray.500">
+      <Heading fontSize={[20, 22, 25]} color="gray.500">
         Sobre el pago
       </Heading>
       <FormControl

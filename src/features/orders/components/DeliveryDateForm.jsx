@@ -49,8 +49,8 @@ const DeliveryDateForm = ({
   };
 
   return (
-    <Stack paddingY={3} marginBottom={2}>
-      <Heading color="gray.500" size="lg">
+    <Stack paddingY={3} paddingX={6} spacing={3} marginBottom={2}>
+      <Heading fontSize={[20, 22, 25]} color="gray.500">
         Sobre el envío
       </Heading>
       <FormControl

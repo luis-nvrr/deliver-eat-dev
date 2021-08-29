@@ -33,125 +33,115 @@ const DestinationForm = ({ register, errors }) => {
   };
 
   return (
-    <Stack direction="row" paddingY={3} marginBottom={2}>
-      <Stack direction="column">
-        <Heading color="gray.500" size="lg">
-          Dirección del comercio
-        </Heading>
-        <Stack paddingEnd={40} paddingY={3}>
-          <Button
-            borderRadius="lg"
-            variant="solid"
-            colorScheme="orange"
-            onClick={handleShowMapClick}
-            size="md"
+    <Stack direction="column" paddingY={3} paddingX={6} spacing={3}>
+      <Heading fontSize={[20, 22, 25]} color="gray.500">
+        Dirección del comercio
+      </Heading>
+      <Button
+        borderRadius="lg"
+        variant="solid"
+        colorScheme="orange"
+        onClick={handleShowMapClick}
+      >
+        {isTypedAddress
+          ? 'Seleccionar en el mapa'
+          : 'Escribir dirección'}
+      </Button>
+      {isTypedAddress && (
+        <Stack paddingY={4}>
+          <FormControl
+            isInvalid={Boolean(errors?.destinationStreet?.message)}
+            errortext={errors?.destinationStreet?.message}
+            isRequired
           >
-            {isTypedAddress
-              ? 'Seleccionar en el mapa'
-              : 'Escribir dirección'}
-          </Button>
-        </Stack>
-        {isTypedAddress && (
-          <Stack>
-            <FormControl
-              isInvalid={Boolean(errors?.destinationStreet?.message)}
-              errortext={errors?.destinationStreet?.message}
-              isRequired
-            >
-              <FormLabel>Calle</FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  color="gray.300"
-                >
-                  <CFiMapPin color="gray.500" />
-                </InputLeftElement>
-                <Input
-                  type="text"
-                  placeholder="Avenida falsa"
-                  {...register('destinationStreet')}
-                />
-              </InputGroup>
-              <FormErrorMessage>
-                {errors?.destinationStreet?.message
-                  ? 'La calle es requerida'
-                  : false}
-              </FormErrorMessage>
-            </FormControl>
-            <FormControl
-              isInvalid={Boolean(errors?.destinationNumber?.message)}
-              errortext={errors?.destinationNumber?.message}
-              isRequired
-            >
-              <FormLabel>Numero</FormLabel>
+            <FormLabel>Calle</FormLabel>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none" color="gray.300">
+                <CFiMapPin color="gray.500" />
+              </InputLeftElement>
               <Input
-                type="number"
-                placeholder="123"
-                {...register('destinationNumber')}
+                type="text"
+                placeholder="Avenida falsa"
+                {...register('destinationStreet')}
               />
-              <FormErrorMessage>
-                {errors?.destinationNumber?.message
-                  ? 'El número es requerido'
-                  : false}
-              </FormErrorMessage>
-            </FormControl>
-            <FormControl
-              isInvalid={Boolean(errors?.destinationCity?.message)}
-              errortext={errors?.destinationCity?.message}
-              isRequired
-            >
-              <FormLabel>Ciudad</FormLabel>
-              <Select
-                placeholder="Elija una ciudad"
-                {...register('destinationCity')}
-              >
-                {validCities.map((city) => (
-                  <option key={city}>{city}</option>
-                ))}
-              </Select>
-              <FormErrorMessage>
-                {errors?.destinationCity?.message
-                  ? 'La ciudad es requerido'
-                  : false}
-              </FormErrorMessage>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Referencia</FormLabel>
-              <Textarea
-                placeholder="Casa verde"
-                size="md"
-                resize="none"
-                {...register('destinationReference')}
-              />
-              <Stack
-                direction="row"
-                alignItems="flex-end"
-                justifyContent="flex-end"
-              >
-                <FormHelperText>max 250 caracteres</FormHelperText>
-              </Stack>
-            </FormControl>
-          </Stack>
-        )}
-
-        {!isTypedAddress && (
-          <Stack direction="column" width="md" paddingY={4}>
+            </InputGroup>
+            <FormErrorMessage>
+              {errors?.destinationStreet?.message
+                ? 'La calle es requerida'
+                : false}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl
+            isInvalid={Boolean(errors?.destinationNumber?.message)}
+            errortext={errors?.destinationNumber?.message}
+            isRequired
+          >
+            <FormLabel>Numero</FormLabel>
             <Input
-              isDisabled
-              variant="flushed"
-              size="md"
-              value={
-                address?.city
-                  ? ` ${address.city}`
-                  : 'Seleccione un punto en el mapa'
-              }
+              type="number"
+              placeholder="123"
+              {...register('destinationNumber')}
             />
-            <AspectRatio ratio={16 / 9}>
-              <Map setAddress={setAddress} />
-            </AspectRatio>
-          </Stack>
-        )}
-      </Stack>
+            <FormErrorMessage>
+              {errors?.destinationNumber?.message
+                ? 'El número es requerido'
+                : false}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl
+            isInvalid={Boolean(errors?.destinationCity?.message)}
+            errortext={errors?.destinationCity?.message}
+            isRequired
+          >
+            <FormLabel>Ciudad</FormLabel>
+            <Select
+              placeholder="Elija una ciudad"
+              {...register('destinationCity')}
+            >
+              {validCities.map((city) => (
+                <option key={city}>{city}</option>
+              ))}
+            </Select>
+            <FormErrorMessage>
+              {errors?.destinationCity?.message
+                ? 'La ciudad es requerido'
+                : false}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Referencia</FormLabel>
+            <Textarea
+              placeholder="Casa verde"
+              resize="none"
+              {...register('destinationReference')}
+            />
+            <Stack
+              direction="row"
+              alignItems="flex-end"
+              justifyContent="flex-end"
+            >
+              <FormHelperText>max 250 caracteres</FormHelperText>
+            </Stack>
+          </FormControl>
+        </Stack>
+      )}
+
+      {!isTypedAddress && (
+        <Stack direction="column" paddingY={3} paddingX={6}>
+          <Input
+            isDisabled
+            variant="flushed"
+            value={
+              address?.city
+                ? ` ${address.city}`
+                : 'Seleccione un punto en el mapa'
+            }
+          />
+          <AspectRatio ratio={16 / 9}>
+            <Map setAddress={setAddress} />
+          </AspectRatio>
+        </Stack>
+      )}
     </Stack>
   );
 };

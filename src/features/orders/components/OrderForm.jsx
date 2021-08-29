@@ -64,21 +64,26 @@ const OrderForm = () => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      maxWidth="6xl"
     >
-      <Center paddingY={6} maxWidth="6xl">
+      <Center paddingY={3}>
         <Stack
           flexDirection="column"
           spacing={6}
           backgroundColor="whiteAlpha.500"
           boxShadow="lg"
           borderRadius="3xl"
-          alignItems="center"
-          justifyContent="center"
-          paddingY={6}
-          width="2xl"
+          paddingX={[3, 10, 20]}
+          paddingY={10}
         >
           <form onSubmit={handleSubmit(onSubmit, onError)}>
-            <Heading color="black.500">Pedido de lo que sea</Heading>
+            <Heading
+              paddingX={6}
+              fontSize={[25, 30, 30]}
+              color="black.500"
+            >
+              Pedido de lo que sea
+            </Heading>
             <ProductForm
               register={register}
               errors={errors}
@@ -110,7 +115,6 @@ const OrderForm = () => {
                 type="submit"
                 variant="solid"
                 colorScheme="orange"
-                width="xs"
               >
                 Confirmar Pedido
               </Button>

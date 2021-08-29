@@ -33,29 +33,26 @@ const Navbar = () => {
           justifyContent="space-between"
           paddingY={3}
         >
-          <Stack alignItems="center" direction="row" spacing={3}>
+          <Stack alignItems="center" direction="row" spacing={1}>
             <Image height={10} width={10} src={logo} />
-            <Heading color="primary.400" fontSize="4xl">
+            <Heading color="primary.400" fontSize={(5, 15, 30)}>
               DeliverEat!
             </Heading>
           </Stack>
-          <Stack
-            alignItems="center"
-            color="gray.500"
-            direction="row"
-            spacing={3}
-          >
+          <Stack alignItems="center" color="gray.500" direction="row">
             <Icon as={FaUser} w={6} h={6} />
-            <Text fontWeight="500">{user?.name}</Text>
+            <Text fontWeight="500" fontSize={[5, 10, 15]}>
+              {user?.name}
+            </Text>
             <Stack
               alignItems="center"
               backgroundColor="gray.100"
               borderRadius={9999}
               cursor="pointer"
-              paddingX={3}
               paddingY={2}
               direciton="row"
               onClick={handleUserLogout}
+              w={[6, 8, 10]}
             >
               <Icon as={CgLogOff} />
             </Stack>

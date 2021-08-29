@@ -20,8 +20,13 @@ import PropTypes from 'prop-types';
 const CFiMapPin = chakra(FiMapPin);
 
 const OriginForm = ({ register, errors }) => (
-  <Stack direction="column" paddingY={3} marginBottom={2}>
-    <Heading color="gray.500" size="lg">
+  <Stack
+    direction="column"
+    paddingY={3}
+    paddingX={6}
+    marginBottom={2}
+  >
+    <Heading color="gray.500" fontSize={[20, 22, 25]}>
       Dirección de entrega
     </Heading>
     <FormControl
