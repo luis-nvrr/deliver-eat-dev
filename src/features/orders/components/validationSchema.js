@@ -44,14 +44,35 @@ const schema = yup.object().shape({
     .test('file-size', 'El tamaño máximo es 5MB', (value) =>
       checkIfFilesAreTooBig(value),
     ),
+  isTypedAddress: yup.boolean(),
   originStreet: yup.string().required(),
   originNumber: yup.number().required(),
   originCity: yup.string().required(),
   originReference: yup.string().max(250),
-  destinationStreet: yup.string().max(100).required(),
-  destinationNumber: yup.number().required(),
-  destinationCity: yup.string().required(),
-  destinationReference: yup.string().max(250),
+  destinationStreet: yup.string().when('isTypedAddress', {
+    is: 'true',
+    then: yup.string().max(100).required(),
+  }),
+  destinationNumber: yup.string().when('isTypedAddress', {
+    is: 'true',
+    then: yup.string().required(),
+  }),
+  destinationCity: yup.string().when('isTypedAddress', {
+    is: 'true',
+    then: yup.string().max(100).required(),
+  }),
+  destinationReference: yup.string().when('isTypedAddress', {
+    is: 'true',
+    then: yup.string().max(250).required(),
+  }),
+  mapSelectionAddress: yup
+    .string()
+    .min(2)
+    .max(250)
+    .when('isTypedAddress', {
+      is: 'false',
+      then: yup.string().min(2).max(250).required(),
+    }),
   paymentMethod: yup.string().max(100).required(),
   paymentAmount: yup.string().when('paymentMethod', {
     is: 'efectivo',

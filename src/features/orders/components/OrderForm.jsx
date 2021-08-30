@@ -93,7 +93,13 @@ const OrderForm = () => {
             <Divider />
             <OriginForm register={register} errors={errors} />
             <Divider />
-            <DestinationForm register={register} errors={errors} />
+            <DestinationForm
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              clearErrors={clearErrors}
+              watch={watch}
+            />
             <Divider />
             <PaymentForm
               register={register}

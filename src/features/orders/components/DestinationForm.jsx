@@ -22,15 +22,41 @@ import Map from './Map';
 
 const CFiMapPin = chakra(FiMapPin);
 
-const DestinationForm = ({ register, errors }) => {
+const DestinationForm = ({
+  register,
+  errors,
+  setValue,
+  clearErrors,
+  watch,
+}) => {
   const validCities = ['Córdoba', 'Mendoza'];
-  const [isTypedAddress, setIsTypedAddress] = React.useState(true);
-  const [address, setAddress] = React.useState();
+  const isTypedAddress = watch('isTypedAddress');
 
-  const handleShowMapClick = (event) => {
-    console.log(event);
-    setIsTypedAddress(!isTypedAddress);
+  const handleShowMapClick = () => {
+    setValue('isTypedAddress', !isTypedAddress, {
+      shouldValidate: false,
+    });
+
+    setValue('destinationStreet', '', { shouldValidate: false });
+    setValue('destinationNumber', '', { shouldValidate: false });
+    setValue('destinationCity', '', { shouldValidate: false });
+    setValue('destinationReference', '', {
+      shouldValidate: false,
+    });
+    setValue('mapSelectionAddress', '--', { shouldValidate: true });
+
+    clearErrors('destinationStreet');
+    clearErrors('destinationNumber');
+    clearErrors('destinationCity');
+    clearErrors('destinationReference');
+    clearErrors('mapSelectionAddress');
+
+    if (isTypedAddress) {
+      setValue('mapSelectionAddress', '-', { shouldValidate: true });
+    }
   };
+
+  console.log('isTypedAddress', isTypedAddress);
 
   return (
     <Stack direction="column" paddingY={3} paddingX={6} spacing={3}>
@@ -104,7 +130,7 @@ const DestinationForm = ({ register, errors }) => {
             </Select>
             <FormErrorMessage>
               {errors?.destinationCity?.message
-                ? 'La ciudad es requerido'
+                ? 'La ciudad es requerida'
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -127,18 +153,22 @@ const DestinationForm = ({ register, errors }) => {
       )}
 
       {!isTypedAddress && (
-        <Stack direction="column" paddingY={3} paddingX={6}>
-          <Input
-            isDisabled
-            variant="flushed"
-            value={
-              address?.city
-                ? ` ${address.city}`
-                : 'Seleccione un punto en el mapa'
-            }
-          />
-          <AspectRatio ratio={16 / 9}>
-            <Map setAddress={setAddress} />
+        <Stack direction="column" paddingY={3}>
+          <FormControl
+            isInvalid={Boolean(errors?.mapSelectionAddress?.message)}
+            errortext={errors?.mapSelectionAddress?.message}
+            isRequired
+          >
+            <FormLabel>Seleccione un punto en el mapa</FormLabel>
+            <Input isReadOnly {...register('mapSelectionAddress')} />
+            <FormErrorMessage>
+              {errors?.mapSelectionAddress?.message
+                ? 'Debe seleccionar un punto en el mapa'
+                : false}
+            </FormErrorMessage>
+          </FormControl>
+          <AspectRatio ratio={16 / 9} w={[280, 400, 500]}>
+            <Map setValue={setValue} />
           </AspectRatio>
         </Stack>
       )}
@@ -149,6 +179,9 @@ const DestinationForm = ({ register, errors }) => {
 DestinationForm.propTypes = {
   register: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  setValue: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  watch: PropTypes.func.isRequired,
 };
 
 export default DestinationForm;
