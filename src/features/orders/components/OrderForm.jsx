@@ -34,8 +34,7 @@ const OrderForm = () => {
   });
   const toast = useToast();
 
-  const onSubmit = ({ data, e }) => {
-    console.log(data, e);
+  const onSubmit = () => {
     toast({
       position: 'top',
       title: 'Pedido registrado',
@@ -47,8 +46,7 @@ const OrderForm = () => {
     // Reset();
   };
 
-  const onError = ({ formErrors, e }) => {
-    console.log(formErrors, e);
+  const onError = () => {
     toast({
       position: 'top',
       title: 'Ha ocurrido un error',

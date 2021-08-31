@@ -41,7 +41,6 @@ const PaymentForm = ({
   };
 
   const handlePaymentMethodChange = (event) => {
-    console.log(event.target.value);
     setValue('paymentAmount', '', {
       shouldValidate: false,
       shouldDirty: false,

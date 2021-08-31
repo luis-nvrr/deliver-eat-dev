@@ -19,13 +19,9 @@ const DeliveryDateForm = ({
   setValue,
 }) => {
   const watchShippingMethod = watch('shippingMethod');
-  const watchShippingDate = watch('shippingDate');
   const [startDate, setStartDate] = React.useState(null);
-  console.log(watchShippingDate);
 
   const handleShippingMethodChange = (event) => {
-    console.log(event.target.value);
-
     setValue('shippingDate', '', {
       shouldValidate: false,
       shouldDirty: false,

@@ -1,5 +1,4 @@
 export function checkIfFilesAreTooBig(files) {
-  console.log(files);
   let valid = true;
   if (files) {
     files.forEach((file) => {

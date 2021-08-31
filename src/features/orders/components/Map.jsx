@@ -21,9 +21,15 @@ const MyMap = ({ marker, onMarkerDragEnd }) => (
   </LoadScript>
 );
 
-const Map = ({ setValue }) => {
+const Map = ({ setValue, watch, clearErrors }) => {
   const center = { lat: -31.427556, lng: -64.1882 };
-  const [marker] = React.useState(center);
+  const [marker, setMarker] = React.useState(center);
+  const street = watch('destinationStreet');
+  const number = watch('destinationNumber');
+  const city = watch('destinationCity');
+
+  const address =
+    street && number && city ? `${number} ${street}, ${city}` : '';
 
   const onMarkerDragEnd = async (event) => {
     const newLat = event.latLng.lat();
@@ -31,15 +37,26 @@ const Map = ({ setValue }) => {
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newLat},${newLng}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
     );
-    console.log(response);
-    const number =
-      response.data.results[0].address_components[0].long_name;
-    const street =
-      response.data.results[0].address_components[1].short_name;
-    const city = response.data.results[0].formatted_address;
-    setValue('mapSelectionAddress', city, { shouldValidate: true });
-    console.log(street, number, city);
+
+    const markerAddress = response.data.results[0].formatted_address;
+    setValue('mapSelectionAddress', markerAddress, {
+      shouldValidate: true,
+    });
+    clearErrors('mapSelectionAddress');
+    setValue('destinationStreet', '', { shouldValidate: true });
   };
+
+  React.useEffect(async () => {
+    if (!address) return;
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
+    );
+
+    if (response.data.results === 0) return;
+    const { lat, lng } = response.data.results[0].geometry.location;
+
+    setMarker({ lat, lng });
+  }, [address]);
 
   return <MyMap marker={marker} onMarkerDragEnd={onMarkerDragEnd} />;
 };
@@ -54,6 +71,7 @@ MyMap.propTypes = {
 
 Map.propTypes = {
   setValue: PropTypes.func.isRequired,
+  watch: PropTypes.func.isRequired,
 };
 
 export default Map;
