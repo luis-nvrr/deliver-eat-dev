@@ -199,7 +199,7 @@ const PaymentForm = ({
               placeholderText="Seleccione una fecha"
               dateFormat="dd/MM/yyyy"
               isClearable
-              showMonthYearDropdown
+              showYearDropdown
             />
             <FormErrorMessage>
               {errors?.expirationDate?.message

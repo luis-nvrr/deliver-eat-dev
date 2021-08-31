@@ -10,7 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { addMonths } from 'date-fns';
+import { addDays, setHours, setMinutes } from 'date-fns';
 
 const DeliveryDateForm = ({
   errors,
@@ -84,12 +84,15 @@ const DeliveryDateForm = ({
               selected={startDate}
               onChange={handleDateChange}
               minDate={new Date()}
-              maxDate={addMonths(new Date(), 5)}
+              maxDate={addDays(new Date(), 5)}
               placeholderText="Ingrese una fecha"
               timeInputLabel="Hora:"
               dateFormat="dd/MM/yyyy h:mm aa"
-              showTimeInput
+              minTime={setHours(setMinutes(new Date(), 0), 8)}
+              maxTime={setHours(setMinutes(new Date(), 30), 24)}
+              showTimeSelect
               isClearable
+              timeIntervals={15}
             />
             <FormErrorMessage>
               {errors?.shippingDate?.message
