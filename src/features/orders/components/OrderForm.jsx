@@ -70,7 +70,7 @@ const OrderForm = () => {
         <Stack
           flexDirection="column"
           spacing={6}
-          backgroundColor="whiteAlpha.500"
+          backgroundColor="whiteAlpha.900"
           boxShadow="lg"
           borderRadius="3xl"
           paddingX={[3, 10, 20]}
@@ -120,7 +120,7 @@ const OrderForm = () => {
                 borderRadius="lg"
                 type="submit"
                 variant="solid"
-                colorScheme="orange"
+                colorScheme="primary"
               >
                 Confirmar Pedido
               </Button>

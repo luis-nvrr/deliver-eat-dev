@@ -25,8 +25,8 @@ const Landing = () => {
         flexDirection="column"
         width="100wh"
         height="100vh"
-        backgroundColor="#ffcfdf"
-        bgGradient="linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);"
+        backgroundColor="rgb(116,0,184);"
+        bgGradient="linear-gradient(90deg, rgba(116,0,184,1) 0%, rgba(94,96,206,1) 32%, rgba(78,168,222,1) 93%);"
         justifyContent="center"
         alignItems="center"
       >
@@ -37,7 +37,7 @@ const Landing = () => {
             direction="column"
             justifyContent="center"
           >
-            <Heading as="h1" mb={6} size="2xl" color="blackAlpha">
+            <Heading as="h1" mb={6} size="2xl" color="whiteAlpha.900">
               DeliverEat!
             </Heading>
             <Stack
@@ -80,7 +80,11 @@ const Landing = () => {
                   </Text>
                 </Stack>
               </Box>
-              <Button colorScheme="orange" onClick={handleStart}>
+              <Button
+                variant="solid"
+                colorScheme="button"
+                onClick={handleStart}
+              >
                 Pedir
               </Button>
             </Stack>

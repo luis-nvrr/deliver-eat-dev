@@ -66,7 +66,7 @@ const DestinationForm = ({
       <Button
         borderRadius="lg"
         variant="solid"
-        colorScheme="orange"
+        colorScheme="primary"
         onClick={handleShowMapClick}
       >
         {isTypedAddress

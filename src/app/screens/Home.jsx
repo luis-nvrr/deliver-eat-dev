@@ -10,13 +10,13 @@ const HomeScreen = () => (
       alignItems="center"
       backgroundImage={`url(${header})`}
       backgroundSize="cover"
-      borderRadius="md"
+      borderRadius="3xl"
       justifyContent="center"
       minHeight={64}
       paddingX={6}
       paddingY={6}
     >
-      <Heading color="primary.500" fontSize={[20, 30, 40]}>
+      <Heading color="primary.700" fontSize={[20, 30, 40]}>
         ¡Pedí lo que quieras!
       </Heading>
     </Flex>

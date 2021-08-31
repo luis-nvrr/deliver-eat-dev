@@ -126,7 +126,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
         errortext={errors?.image?.message}
       >
         <Button
-          colorScheme="orange"
+          colorScheme="primary"
           leftIcon={<Icon as={CFiImage} />}
         >
           <input
@@ -137,6 +137,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
               width: '100%',
               height: '100%',
               position: 'absolute',
+              cursor: 'pointer',
             }}
             accept=".jpg"
             {...register('image')}
