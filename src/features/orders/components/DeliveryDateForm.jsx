@@ -80,12 +80,12 @@ const DeliveryDateForm = ({
               selected={startDate}
               onChange={handleDateChange}
               minDate={new Date()}
-              maxDate={addDays(new Date(), 5)}
+              maxDate={addDays(new Date(), 7)}
               placeholderText="Ingrese una fecha"
               timeInputLabel="Hora:"
               dateFormat="dd/MM/yyyy h:mm aa"
               minTime={setHours(setMinutes(new Date(), 0), 8)}
-              maxTime={setHours(setMinutes(new Date(), 30), 24)}
+              maxTime={setHours(setMinutes(new Date(), 59), 23)}
               showTimeSelect
               isClearable
               timeIntervals={15}
