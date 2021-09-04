@@ -37,7 +37,11 @@ const Navbar = () => {
           justifyContent="space-between"
           paddingY={3}
         >
-          <Stack alignItems="center" direction="row" spacing={3}>
+          <Stack
+            alignItems="center"
+            direction="row"
+            spacing={[1, 3, 3]}
+          >
             <Image height={10} width={10} src={logo} />
             <Heading color="primary.300" fontSize={(5, 15, 30)}>
               DeliverEat!
@@ -52,14 +56,15 @@ const Navbar = () => {
               alignItems="center"
               justifyContent="center"
               backgroundColor="primary.300"
-              borderRadius={3333}
+              borderRadius="md"
               cursor="pointer"
               paddingY={2}
               direction="row"
-              w={[10, 20, 40]}
+              h={10}
+              w={[20, 20, 40]}
             >
-              <Icon as={FaUser} w={6} h={6} />
-              <Text fontWeight="500" fontSize={[5, 10, 15]}>
+              <Icon as={FaUser} w={[0, 6, 6]} h={[0, 10, 10]} />
+              <Text fontWeight="500" fontSize={[15, 20, 20]}>
                 {user?.name}
               </Text>
             </Stack>
@@ -67,12 +72,13 @@ const Navbar = () => {
               alignItems="center"
               justifyContent="center"
               backgroundColor="primary.300"
-              borderRadius={3333}
+              borderRadius="md"
               cursor="pointer"
               paddingY={2}
               direction="row"
               onClick={handleUserLogout}
-              w={[3, 5, 10]}
+              h={10}
+              w={[7, 10, 10]}
             >
               <Icon as={CgLogOff} />
             </Stack>
