@@ -21,17 +21,12 @@ import Map from './Map';
 
 const CFiMapPin = chakra(FiMapPin);
 
-const DestinationForm = ({
-  register,
-  errors,
-  setValue,
-  clearErrors,
-  watch,
-}) => {
+const DestinationForm = ({ register, errors, setValue, watch }) => {
+  const [selectedCity, setSelectedCity] = React.useState('');
   const validCities = [
     {
       id: 1,
-      name: 'Córdoba capital',
+      name: 'Ciudad de Córdoba',
     },
     {
       id: 2,
@@ -43,27 +38,15 @@ const DestinationForm = ({
     },
   ];
 
-  const destinationStreet = watch('destinationStreet');
-  const watchMapSelectionAddress = watch('mapSelectionAddress');
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value);
+  };
 
   React.useEffect(() => {
-    if (destinationStreet) {
-      setValue('mapSelectionAddress', '', { shouldValidate: false });
-      clearErrors('mapSelectionAddress');
-    } else {
-      setValue('destinationStreet', '', { shouldValidate: false });
-      setValue('destinationNumber', '', { shouldValidate: false });
-      setValue('destinationCity', '', { shouldValidate: false });
-      setValue('destinationReference', '', {
-        shouldValidate: false,
-      });
-
-      clearErrors('destinationStreet');
-      clearErrors('destinationNumber');
-      clearErrors('destinationCity');
-      clearErrors('destinationReference');
-    }
-  }, [destinationStreet]);
+    setValue('destinationCity', selectedCity, {
+      shouldValidate: true,
+    });
+  }, [selectedCity]);
 
   return (
     <Stack direction="column" paddingY={3} paddingX={6} spacing={3}>
@@ -74,7 +57,7 @@ const DestinationForm = ({
         <FormControl
           isInvalid={Boolean(errors?.destinationStreet?.message)}
           errortext={errors?.destinationStreet?.message}
-          isRequired={destinationStreet}
+          isRequired
         >
           <FormLabel>Calle</FormLabel>
           <InputGroup>
@@ -96,8 +79,7 @@ const DestinationForm = ({
         <FormControl
           isInvalid={Boolean(errors?.destinationNumber?.message)}
           errortext={errors?.destinationNumber?.message}
-          isRequired={destinationStreet}
-          isDisabled={!destinationStreet}
+          isRequired
         >
           <FormLabel>Numero</FormLabel>
           <Input
@@ -114,16 +96,18 @@ const DestinationForm = ({
         <FormControl
           isInvalid={Boolean(errors?.destinationCity?.message)}
           errortext={errors?.destinationCity?.message}
-          isRequired={destinationStreet}
-          isDisabled={!destinationStreet}
+          isRequired
         >
           <FormLabel>Ciudad</FormLabel>
           <Select
             placeholder="Elija una ciudad"
-            {...register('destinationCity')}
+            onChange={handleCityChange}
+            value={selectedCity}
           >
             {validCities.map((city) => (
-              <option key={city.id}>{city.name}</option>
+              <option key={city.id} value={city.name}>
+                {city.name}
+              </option>
             ))}
           </Select>
           <FormErrorMessage>
@@ -144,7 +128,7 @@ const DestinationForm = ({
             alignItems="flex-end"
             justifyContent="flex-end"
           >
-            <FormHelperText>max 250 caracteres</FormHelperText>
+            <FormHelperText>max 280 caracteres</FormHelperText>
           </Stack>
         </FormControl>
       </Stack>
@@ -155,7 +139,6 @@ const DestinationForm = ({
           errortext={errors?.mapSelectionAddress?.message}
         >
           <FormLabel>Seleccione un punto en el mapa</FormLabel>
-          <Input isReadOnly value={watchMapSelectionAddress || ''} />
           <FormErrorMessage>
             {errors?.mapSelectionAddress?.message
               ? 'Debe seleccionar un punto en el mapa o escribir una dirección arriba'
@@ -166,7 +149,7 @@ const DestinationForm = ({
           <Map
             setValue={setValue}
             watch={watch}
-            clearErrors={clearErrors}
+            setSelectedCity={setSelectedCity}
           />
         </AspectRatio>
       </Stack>
@@ -178,7 +161,6 @@ DestinationForm.propTypes = {
   register: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   setValue: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
   watch: PropTypes.func.isRequired,
 };
 

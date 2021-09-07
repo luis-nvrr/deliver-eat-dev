@@ -65,65 +65,35 @@ const schema = yup.object().shape({
       280,
       'La ciudad debe tener una longitud máxima de 280 caracteres',
     )
-    .required('La ciudad es requerida')
-    .when('destinationCity', {
-      is: (destinationCity) => destinationCity,
-      then: yup
-        .string()
-        .max(280)
-        .test(
-          'same-city',
-          'Las ciudades tienen que ser iguales',
-          function testCity(value) {
-            console.log(this.options.context.destinationCity);
-            return value === this.options.context.destinationCity;
-          },
-        ),
-    }),
+    .test(
+      'same-city',
+      'Las ciudades tienen que ser iguales',
+      (value) => console.log(value),
+    )
+    .required('La ciudad es requerida'),
   originReference: yup.string().max(280),
-  destinationStreet: yup.string().when('mapSelectionAddresss', {
-    is: (mapSelectionAddress) => mapSelectionAddress,
-    then: yup
-      .string()
-      .min(5, 'El mínimo es 5 caracteres')
-      .max(280, 'El máximo es de 280 caracteres')
-      .required(),
-  }),
-  destinationNumber: yup
+  destinationStreet: yup
     .string()
-    .optional()
-    .when('destinationStreet', {
-      is: (destinatinoStreet) => destinatinoStreet,
-      then: yup
-        .number()
-        .typeError('Debe especificar un número')
-        .positive('El número tiene que ser positivo')
-        .required(),
-    }),
-  destinationCity: yup.string().when('destinationStreet', {
-    is: (destinatinoStreet) => destinatinoStreet,
-    then: yup
-      .string()
-      .max(280, 'El máximo es de 280 caracteres')
-      .required('La ciudad es requerida'),
-  }),
+    .min(5, 'El mínimo es 5 caracteres')
+    .max(280, 'El máximo es de 280 caracteres')
+    .required('La ciudad es requerida'),
+  destinationNumber: yup
+    .number()
+    .typeError('Debe especificar un número')
+    .positive('El número tiene que ser positivo')
+    .required('El número es requerido'),
+  destinationCity: yup
+    .string()
+    .min(1, 'Debe ingresar una ciudad')
+    .max(280, 'El máximo es de 280 caracteres')
+    .required('La ciudad es requerida'),
   destinationReference: yup
     .string()
     .max(280, 'El máximo es de 280 caracteres'),
-  mapSelectionAddress: yup
-    .string()
-    .max(280, 'El máximo es de 280 caracteres')
-    .when('destinationStreet', {
-      is: '',
-      then: yup
-        .string()
-        .max(280, 'El máximo es de 280 caracteres')
-        .required(),
-    }),
   paymentMethod: yup
     .string()
     .max(280, 'El máximo es de 280 caracteres')
-    .required(),
+    .required('El método de pago es requerido'),
   paymentAmount: yup
     .number()
     .typeError('Debe ingresar un monto')

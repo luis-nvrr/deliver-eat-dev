@@ -23,7 +23,7 @@ const OriginForm = ({ register, errors }) => {
   const validCities = [
     {
       id: 1,
-      name: 'Córdoba capital',
+      name: 'Ciudad de Córdoba',
     },
     {
       id: 2,
@@ -117,9 +117,7 @@ const OriginForm = ({ register, errors }) => {
           alignItems="flex-end"
           justifyContent="flex-end"
         >
-          <FormHelperText>
-            aqui se puede poner un maximo
-          </FormHelperText>
+          <FormHelperText>máx 280 caracteres</FormHelperText>
         </Stack>
       </FormControl>
     </Stack>

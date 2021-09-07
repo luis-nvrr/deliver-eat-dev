@@ -95,7 +95,6 @@ const OrderForm = () => {
               register={register}
               errors={errors}
               setValue={setValue}
-              clearErrors={clearErrors}
               watch={watch}
             />
             <Divider />
