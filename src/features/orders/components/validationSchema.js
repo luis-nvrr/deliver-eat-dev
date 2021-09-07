@@ -35,6 +35,22 @@ const checkIfFilesAreCorrectType = (file) => {
   return false;
 };
 
+function equalTo(ref, msg) {
+  return this.test({
+    name: 'equalTo',
+    exclusive: false,
+    message: msg,
+    params: {
+      reference: ref.path,
+    },
+    test(value) {
+      return value === this.resolve(ref);
+    },
+  });
+}
+
+yup.addMethod(yup.string, 'equalTo', equalTo);
+
 const schema = yup.object().shape({
   product: yup
     .string()
@@ -65,10 +81,9 @@ const schema = yup.object().shape({
       280,
       'La ciudad debe tener una longitud máxima de 280 caracteres',
     )
-    .test(
-      'same-city',
-      'Las ciudades tienen que ser iguales',
-      (value) => console.log(value),
+    .equalTo(
+      yup.ref('destinationCity'),
+      'Las ciudades deben ser iguales',
     )
     .required('La ciudad es requerida'),
   originReference: yup.string().max(280),
