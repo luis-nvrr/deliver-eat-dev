@@ -117,7 +117,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
         </InputGroup>
         <FormErrorMessage>
           {errors?.product?.message
-            ? 'El producto es requerido'
+            ? errors?.product?.message
             : false}
         </FormErrorMessage>
       </FormControl>

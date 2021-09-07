@@ -133,7 +133,7 @@ const PaymentForm = ({
           </InputGroup>
           <FormErrorMessage>
             {errors?.paymentAmount?.message
-              ? 'Debe ingresar un monto válido'
+              ? errors?.paymentAmount?.message
               : false}
           </FormErrorMessage>
         </FormControl>
@@ -158,7 +158,7 @@ const PaymentForm = ({
             </InputGroup>
             <FormErrorMessage>
               {errors?.cardNumber?.message
-                ? 'Ingrese un número válido'
+                ? errors?.cardNumber?.message
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -180,7 +180,7 @@ const PaymentForm = ({
             </InputGroup>
             <FormErrorMessage>
               {errors?.cardOwner?.message
-                ? 'Debe ingresar el nombre del titular'
+                ? errors?.cardOwner?.message
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -202,7 +202,7 @@ const PaymentForm = ({
             />
             <FormErrorMessage>
               {errors?.expirationDate?.message
-                ? 'Debe ingresar una fecha de vencimiento válida'
+                ? errors?.expirationDate?.message
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -223,9 +223,7 @@ const PaymentForm = ({
               />
             </InputGroup>
             <FormErrorMessage>
-              {errors?.cvc?.message
-                ? 'Debe ingresar un código CVC válido'
-                : false}
+              {errors?.cvc?.message ? errors?.cvc?.message : false}
             </FormErrorMessage>
           </FormControl>
         </Stack>

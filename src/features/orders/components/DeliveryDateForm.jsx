@@ -84,11 +84,14 @@ const DeliveryDateForm = ({
               placeholderText="Ingrese una fecha"
               timeInputLabel="Hora:"
               dateFormat="dd/MM/yyyy h:mm aa"
-              minTime={setHours(setMinutes(new Date(), 0), 8)}
+              minTime={setHours(
+                setMinutes(new Date(), 0),
+                new Date().getHours() + 1,
+              )}
               maxTime={setHours(setMinutes(new Date(), 59), 23)}
               showTimeSelect
               isClearable
-              timeIntervals={15}
+              timeIntervals={1}
             />
             <FormErrorMessage>
               {errors?.shippingDate?.message

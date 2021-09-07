@@ -28,14 +28,26 @@ const DestinationForm = ({
   clearErrors,
   watch,
 }) => {
-  const validCities = ['Córdoba', 'Mendoza'];
+  const validCities = [
+    {
+      id: 1,
+      name: 'Córdoba capital',
+    },
+    {
+      id: 2,
+      name: 'Rio Primero',
+    },
+    {
+      id: 3,
+      name: 'Villa Carlos Paz',
+    },
+  ];
+
   const destinationStreet = watch('destinationStreet');
-  const isTypedAddress = !!destinationStreet;
   const watchMapSelectionAddress = watch('mapSelectionAddress');
-  console.log(isTypedAddress);
 
   React.useEffect(() => {
-    if (isTypedAddress) {
+    if (destinationStreet) {
       setValue('mapSelectionAddress', '', { shouldValidate: false });
       clearErrors('mapSelectionAddress');
     } else {
@@ -51,10 +63,7 @@ const DestinationForm = ({
       clearErrors('destinationCity');
       clearErrors('destinationReference');
     }
-    setValue('isTypedAddress', isTypedAddress, {
-      shouldValidate: true,
-    });
-  }, [isTypedAddress]);
+  }, [destinationStreet]);
 
   return (
     <Stack direction="column" paddingY={3} paddingX={6} spacing={3}>
@@ -65,7 +74,7 @@ const DestinationForm = ({
         <FormControl
           isInvalid={Boolean(errors?.destinationStreet?.message)}
           errortext={errors?.destinationStreet?.message}
-          isRequired={isTypedAddress}
+          isRequired={destinationStreet}
         >
           <FormLabel>Calle</FormLabel>
           <InputGroup>
@@ -80,14 +89,15 @@ const DestinationForm = ({
           </InputGroup>
           <FormErrorMessage>
             {errors?.destinationStreet?.message
-              ? 'La calle es requerida'
+              ? errors?.destinationStreet?.message
               : false}
           </FormErrorMessage>
         </FormControl>
         <FormControl
           isInvalid={Boolean(errors?.destinationNumber?.message)}
           errortext={errors?.destinationNumber?.message}
-          isRequired={isTypedAddress}
+          isRequired={destinationStreet}
+          isDisabled={!destinationStreet}
         >
           <FormLabel>Numero</FormLabel>
           <Input
@@ -97,14 +107,15 @@ const DestinationForm = ({
           />
           <FormErrorMessage>
             {errors?.destinationNumber?.message
-              ? 'El número es requerido'
+              ? errors?.destinationNumber?.message
               : false}
           </FormErrorMessage>
         </FormControl>
         <FormControl
           isInvalid={Boolean(errors?.destinationCity?.message)}
           errortext={errors?.destinationCity?.message}
-          isRequired={isTypedAddress}
+          isRequired={destinationStreet}
+          isDisabled={!destinationStreet}
         >
           <FormLabel>Ciudad</FormLabel>
           <Select
@@ -112,12 +123,12 @@ const DestinationForm = ({
             {...register('destinationCity')}
           >
             {validCities.map((city) => (
-              <option key={city}>{city}</option>
+              <option key={city.id}>{city.name}</option>
             ))}
           </Select>
           <FormErrorMessage>
             {errors?.destinationCity?.message
-              ? 'La ciudad es requerida'
+              ? errors?.destinationCity?.message
               : false}
           </FormErrorMessage>
         </FormControl>
