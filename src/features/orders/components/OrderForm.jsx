@@ -35,6 +35,7 @@ const OrderForm = () => {
     resolver: yupResolver(schema),
   });
   const toast = useToast();
+  const confirmationRef = React.useRef(null);
 
   const [formData, setFormData] = React.useState(null);
   const [isClicked, setIsClicked] = React.useState(false);
@@ -44,6 +45,7 @@ const OrderForm = () => {
     setEvent(e);
     setFormData(data);
     setIsClicked(!isClicked);
+    confirmationRef.current.scrollIntoView();
   };
 
   const handleCancelClick = () => {
@@ -168,6 +170,7 @@ const OrderForm = () => {
               fontWeight="bold"
               spacing={6}
               zIndex={3}
+              ref={confirmationRef}
             >
               <Confirmation
                 data={formData}
