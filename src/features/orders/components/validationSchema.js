@@ -81,10 +81,6 @@ const schema = yup.object().shape({
       280,
       'La ciudad debe tener una longitud máxima de 280 caracteres',
     )
-    .equalTo(
-      yup.ref('destinationCity'),
-      'Las ciudades deben ser iguales',
-    )
     .required('La ciudad es requerida'),
   originReference: yup.string().max(280),
   destinationStreet: yup
@@ -99,8 +95,8 @@ const schema = yup.object().shape({
     .required('El número es requerido'),
   destinationCity: yup
     .string()
-    .min(1, 'Debe ingresar una ciudad')
     .max(280, 'El máximo es de 280 caracteres')
+    .equalTo(yup.ref('originCity'), 'Las ciudades deben ser iguales')
     .required('La ciudad es requerida'),
   destinationReference: yup
     .string()
@@ -109,17 +105,10 @@ const schema = yup.object().shape({
     .string()
     .max(280, 'El máximo es de 280 caracteres')
     .required('El método de pago es requerido'),
-  paymentAmount: yup
-    .number()
-    .typeError('Debe ingresar un monto')
-    .when('paymentMethod', {
-      is: 'efectivo',
-      then: yup
-        .number()
-        .typeError('Debe ingresar un monto')
-        .positive('El monto tiene que ser positivo')
-        .required('Debe ingresar un monto'),
-    }),
+  paymentAmount: yup.string().when('paymentMethod', {
+    is: 'efectivo',
+    then: yup.string().required('Debe ingresar un monto'),
+  }),
   cardNumber: yup.string().when('paymentMethod', {
     is: 'visa',
     then: yup
@@ -129,11 +118,8 @@ const schema = yup.object().shape({
         'Credit Card number is invalid', // Validation message
         (value) => {
           const number = valid.number(value);
-          console.log('validando', number);
           if (!number.card) return false;
-          return (
-            number.card.type === 'visa' && number.isPotentiallyValid
-          );
+          return number.card.type === 'visa' && number.isValid;
         },
       )
       .required(),

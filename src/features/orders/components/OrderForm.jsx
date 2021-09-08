@@ -6,6 +6,7 @@ import {
   Heading,
   Stack,
   useToast,
+  Box,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,6 +15,7 @@ import schema from './validationSchema';
 
 import OriginForm from './OriginForm';
 
+import Confirmation from './Confirmation';
 import ProductForm from './ProductForm';
 import DestinationForm from './DestinationForm';
 import DeliveryDateForm from './DeliveryDateForm';
@@ -34,7 +36,19 @@ const OrderForm = () => {
   });
   const toast = useToast();
 
-  const onSubmit = () => {
+  const [formData, setFormData] = React.useState(null);
+  const [isClicked, setIsClicked] = React.useState(false);
+  const [event, setEvent] = React.useState(null);
+
+  const onSubmit = (data, e) => {
+    setEvent(e);
+    setFormData(data);
+    setIsClicked(!isClicked);
+  };
+
+  const handleConfirmationClick = () => {
+    setIsClicked(!isClicked);
+    event.target.reset();
     toast({
       position: 'top',
       title: 'Pedido registrado',
@@ -43,7 +57,6 @@ const OrderForm = () => {
       duration: 5000,
       isClosable: true,
     });
-    // Reset();
   };
 
   const onError = () => {
@@ -124,6 +137,42 @@ const OrderForm = () => {
             </Center>
           </form>
         </Stack>
+        {isClicked && (
+          <Flex
+            alignItems="center"
+            borderRadius="sm"
+            height="100%"
+            justifyContent="center"
+            left={0}
+            position="absolute"
+            top={0}
+            width="100%"
+            zIndex={2}
+          >
+            <Box
+              backgroundColor="primary.500"
+              borderRadius="sm"
+              height="100%"
+              left={0}
+              opacity={0.9}
+              position="absolute"
+              top={0}
+              width="100%"
+            />
+            <Stack
+              color="white"
+              fontSize="2xl"
+              fontWeight="bold"
+              spacing={6}
+              zIndex={3}
+            >
+              <Confirmation
+                data={formData}
+                handleConfimationClick={handleConfirmationClick}
+              />
+            </Stack>
+          </Flex>
+        )}
       </Center>
     </Flex>
   );

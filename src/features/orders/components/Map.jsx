@@ -43,7 +43,6 @@ const findClosestMatch = (data) => {
     city: city.name,
   }));
   const sorted = distances.sort((a, b) => a.distance - b.distance);
-  console.log(sorted);
   return sorted[0].city;
 };
 
@@ -70,7 +69,6 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
       response.data.results[0].address_components[0].long_name;
     const responseCity =
       response.data.results[0].plus_code.compound_code;
-    console.log(responseCity);
 
     const closestMatchCity = findClosestMatch(responseCity);
 
