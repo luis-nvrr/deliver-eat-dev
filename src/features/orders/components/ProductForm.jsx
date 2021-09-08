@@ -154,8 +154,8 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
             alignItems="center"
             backgroundColor="white"
             borderColor="primary.500"
-            borderRadius={9999}
-            borderWidth={1}
+            borderRadius={999}
+            borderWidth={2}
             color="primary.500"
             direction="row"
             fontSize="sm"
@@ -164,7 +164,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
             paddingX={1}
             paddingY={1}
             position="absolute"
-            right={20}
+            right={[4, 20]}
             spacing={2}
             top={-1}
             zIndex={1}
@@ -181,7 +181,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
               }}
             />
           </Stack>
-          <AspectRatio width="400px" ratio={4 / 3}>
+          <AspectRatio width={['250px', '400px']} ratio={4 / 3}>
             <Image
               src={imgData}
               alt="Imagen subida"
