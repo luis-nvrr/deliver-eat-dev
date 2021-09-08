@@ -46,6 +46,10 @@ const OrderForm = () => {
     setIsClicked(!isClicked);
   };
 
+  const handleCancelClick = () => {
+    setIsClicked(!isClicked);
+  };
+
   const handleConfirmationClick = () => {
     setIsClicked(!isClicked);
     event.target.reset();
@@ -160,7 +164,6 @@ const OrderForm = () => {
               width="100%"
             />
             <Stack
-              color="white"
               fontSize="2xl"
               fontWeight="bold"
               spacing={6}
@@ -169,6 +172,7 @@ const OrderForm = () => {
               <Confirmation
                 data={formData}
                 handleConfimationClick={handleConfirmationClick}
+                handleCancelClick={handleCancelClick}
               />
             </Stack>
           </Flex>

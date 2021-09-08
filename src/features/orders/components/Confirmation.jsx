@@ -10,44 +10,83 @@ import {
   useToast,
   Text,
   Box,
+  IconButton,
 } from '@chakra-ui/react';
+import { FcCancel } from 'react-icons/fc';
 
-const Confirmation = ({ data, handleConfimationClick }) => (
+const Confirmation = ({
+  data,
+  handleConfimationClick,
+  handleCancelClick,
+}) => (
   <Stack
-    spacing={1}
-    paddingY={3}
-    paddingX={6}
     fontSize={[20, 22, 25]}
+    flexDirection="column"
+    spacing={2}
+    backgroundColor="whiteAlpha.900"
+    boxShadow="lg"
+    borderRadius="3xl"
+    paddingX={[3, 10, 20]}
+    paddingY={10}
+    position="relative"
   >
-    <Heading mb={3} color="primary.200">
+    <Stack
+      alignItems="center"
+      backgroundColor="whiteAlpha.200"
+      borderColor="primary.500"
+      borderRadius={9999}
+      color="primary.500"
+      direction="row"
+      fontSize="sm"
+      fontWeight="500"
+      justifyContent="center"
+      paddingX={1}
+      paddingY={1}
+      position="absolute"
+      right={1}
+      top={0}
+      spacing={2}
+      zIndex={3}
+    >
+      <IconButton
+        aria-label="Cancelar"
+        icon={<FcCancel />}
+        w={8}
+        h={8}
+        onClick={handleCancelClick}
+      />
+    </Stack>
+    <Heading mb={3} color="primary.400">
       Confirmación
     </Heading>
-    <Text color="primary.200">Descripción</Text>
-    <Text>{data.product}</Text>
-    <Divider />
+    <Text color="primary.400">Producto</Text>
+    <Text fontSize={[17, 17, 20]}>{data.product}</Text>
+    <Divider variant="dashed" />
     <Stack direction="column">
-      <Text color="primary.200">Dirección de entrega</Text>
-      <Text>
+      <Text color="primary.400">Dirección de entrega</Text>
+      <Text fontSize={[17, 17, 20]}>
         {data.originStreet} {data.originNumber}, {data.originCity}
       </Text>
       {data.originReference && (
         <Stack>
-          <Text color="primary.200">Referencia</Text>
-          <Text>{data.originReference}</Text>
+          <Text color="primary.400">Referencia</Text>
+          <Text fontSize={[17, 17, 20]}>{data.originReference}</Text>
         </Stack>
       )}
     </Stack>
     <Divider />
     <Stack direction="column">
-      <Text color="primary.200">Dirección del comercio</Text>
-      <Text>
+      <Text color="primary.400">Dirección del comercio</Text>
+      <Text fontSize={[17, 17, 20]}>
         {data.destinationStreet} {data.destinationNumber},{' '}
         {data.destinationCity}{' '}
       </Text>
       {data.destinationReference && (
         <Stack>
-          <Text color="primary.200">Referencia</Text>
-          <Text>{data.destinationReference}</Text>
+          <Text color="primary.400">Referencia</Text>
+          <Text fontSize={[17, 17, 20]}>
+            {data.destinationReference}
+          </Text>
         </Stack>
       )}
     </Stack>
@@ -55,41 +94,43 @@ const Confirmation = ({ data, handleConfimationClick }) => (
     <Stack direction="column">
       {data.paymentMethod === 'visa' && (
         <Stack>
-          <Text color="primary.200">Pago con tarjeta Visa</Text>
-          <Text color="primary.200">Tarjeta</Text>
-          <Text>{data.cardNumber}</Text>
-          <Text color="primary.200">Titular</Text>
-          <Text>{data.cardOwner}</Text>
-          <Text color="primary.200">Fecha de vencimiento</Text>
-          <Text>
+          <Text color="primary.400">Pago con tarjeta Visa</Text>
+          <Text color="primary.400">Tarjeta</Text>
+          <Text fontSize={[17, 17, 20]}>{data.cardNumber}</Text>
+          <Text color="primary.400">Titular</Text>
+          <Text fontSize={[17, 17, 20]}>{data.cardOwner}</Text>
+          <Text color="primary.400">Fecha de vencimiento</Text>
+          <Text fontSize={[17, 17, 20]}>
             {new Date(data.expirationDate).getDate()}/
             {new Date(data.expirationDate).getMonth()}/
             {new Date(data.expirationDate).getUTCFullYear()}
           </Text>
-          <Text color="primary.200">CVC</Text>
-          <Text>{data.cvc}</Text>
+          <Text color="primary.400">CVC</Text>
+          <Text fontSize={[17, 17, 20]}>{data.cvc}</Text>
         </Stack>
       )}
       {data.paymentMethod === 'efectivo' && (
         <Stack>
-          <Text color="primary.200">Monto pagado</Text>
-          <Text>${data.paymentAmount}</Text>{' '}
+          <Text color="primary.400">Monto pagado</Text>
+          <Text fontSize={[17, 17, 20]}>
+            ${data.paymentAmount}
+          </Text>{' '}
         </Stack>
       )}
     </Stack>
     <Divider />
     <Stack direction="column">
-      <Text color="primary.200">Metodo de envio</Text>
+      <Text color="primary.400">Método de envio</Text>
       {data.shippingMethod === 'programado' && (
         <Stack>
-          <Text>Programado</Text>
-          <Text color="primary.200">Fecha de Envio</Text>
-          <Text>
+          <Text fontSize={[17, 17, 20]}>Programado</Text>
+          <Text color="primary.400">Fecha de Envio</Text>
+          <Text fontSize={[17, 17, 20]}>
             {new Date(data.shippingDate).getDate()}/
             {new Date(data.shippingDate).getMonth()}/
             {new Date(data.shippingDate).getUTCFullYear()}
           </Text>
-          <Text>
+          <Text fontSize={[17, 17, 20]}>
             {new Date(data.shippingDate).getHours()}:
             {new Date(data.shippingDate).getMinutes()}
           </Text>
@@ -97,7 +138,7 @@ const Confirmation = ({ data, handleConfimationClick }) => (
       )}
       {data.shippingMethod === 'rapido' && (
         <Stack>
-          <Text borderBottomColor="white">Lo antes posible</Text>
+          <Text fontSize={[17, 17, 20]}>Lo antes posible</Text>
         </Stack>
       )}
     </Stack>
