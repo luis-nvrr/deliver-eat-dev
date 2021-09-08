@@ -56,22 +56,29 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
   const address =
     street && number && city ? `${number} ${street}, ${city}` : '';
 
+  let responseStreet = null;
+  let responseNumber = null;
+  let closestMatchCity = null;
+  const markerAddress =
+    responseStreet && responseNumber && closestMatchCity
+      ? `${responseNumber} ${responseStreet}, ${closestMatchCity}`
+      : '';
+
   const onMarkerDragEnd = async (event) => {
     const newLat = event.latLng.lat();
     const newLng = event.latLng.lng();
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newLat},${newLng}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
     );
-    console.log(response);
 
-    const responseStreet =
+    responseStreet =
       response.data.results[0].address_components[1].long_name;
-    const responseNumber =
+    responseNumber =
       response.data.results[0].address_components[0].long_name;
     const responseCity =
       response.data.results[0].plus_code.compound_code;
 
-    const closestMatchCity = findClosestMatch(responseCity);
+    closestMatchCity = findClosestMatch(responseCity);
 
     setValue('destinationStreet', responseStreet, {
       shouldValidate: true,
@@ -83,11 +90,12 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
   };
 
   React.useEffect(async () => {
-    if (!address) return;
+    if (!address || address === markerAddress) return;
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
     );
 
+    console.log(response);
     if (response.data.results === 0) return;
     const { lat, lng } = response.data.results[0].geometry.location;
 
