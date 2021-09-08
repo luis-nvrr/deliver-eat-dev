@@ -62,6 +62,7 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${newLat},${newLng}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
     );
+    console.log(response);
 
     const responseStreet =
       response.data.results[0].address_components[1].long_name;
