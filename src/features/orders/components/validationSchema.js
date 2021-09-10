@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
 import valid from 'card-validator';
+import { addHours, isBefore } from 'date-fns';
 
 const checkIfFilesAreTooBig = (file) => {
   if (file === null || file === undefined) {
@@ -67,7 +68,7 @@ const schema = yup.object().shape({
     ),
   originStreet: yup
     .string()
-    .min(5, 'El mínimo es 5 caracteres')
+    .min(5, 'El mínimo es 3 caracteres')
     .max(280, 'El máximo es de 280 caracteres')
     .required(),
   originNumber: yup
@@ -85,7 +86,7 @@ const schema = yup.object().shape({
   originReference: yup.string().max(280),
   destinationStreet: yup
     .string()
-    .min(5, 'El mínimo es 5 caracteres')
+    .min(3, 'El mínimo es 3 caracteres')
     .max(280, 'El máximo es de 280 caracteres')
     .required('La ciudad es requerida'),
   destinationNumber: yup
@@ -96,7 +97,10 @@ const schema = yup.object().shape({
   destinationCity: yup
     .string()
     .max(280, 'El máximo es de 280 caracteres')
-    .equalTo(yup.ref('originCity'), 'Las ciudades deben ser iguales')
+    .equalTo(
+      yup.ref('originCity'),
+      'La ciudad del comercio debe ser la misma que la de entrega',
+    )
     .required('La ciudad es requerida'),
   destinationReference: yup
     .string()
@@ -105,17 +109,25 @@ const schema = yup.object().shape({
     .string()
     .max(280, 'El máximo es de 280 caracteres')
     .required('El método de pago es requerido'),
-  paymentAmount: yup.string().when('paymentMethod', {
-    is: 'efectivo',
-    then: yup.string().required('Debe ingresar un monto'),
-  }),
+  paymentAmount: yup
+    .number()
+    .nullable()
+    .when('paymentMethod', {
+      is: 'efectivo',
+      then: yup
+        .number()
+        .typeError('Debe ingresar un monto válido')
+        .nullable()
+        .positive('El monto debe ser positivo')
+        .required('Debe ingresar un monto'),
+    }),
   cardNumber: yup.string().when('paymentMethod', {
     is: 'visa',
     then: yup
       .string()
       .test(
         'test-number', // This is used internally by yup
-        'Credit Card number is invalid', // Validation message
+        'El número de tarjeta no es válido', // Validation message
         (value) => {
           const number = valid.number(value);
           if (!number.card) return false;
@@ -126,28 +138,50 @@ const schema = yup.object().shape({
   }),
   cardOwner: yup.string().when('paymentMethod', {
     is: 'visa',
-    then: yup.string().max(100).required(),
+    then: yup.string().max(100).required('El titular es requerido'),
   }),
-  expirationDate: yup.string().when('paymentMethod', {
-    is: 'visa',
-    then: yup.string().required(),
-  }),
+  expirationDate: yup
+    .string()
+    .nullable()
+    .when('paymentMethod', {
+      is: 'visa',
+      then: yup
+        .string()
+        .nullable()
+        .required('La fecha de vencimiento es requerida'),
+    }),
   cvc: yup.string().when('paymentMethod', {
     is: 'visa',
     then: yup
       .string()
       .test(
         'test-cvv',
-        'CVV is invalid',
+        'El CVC ingresado no es válido',
         (value) => valid.cvv(value).isValid,
       )
       .required(),
   }),
   shippingMethod: yup.string().max(280).required(),
-  shippingDate: yup.string().when('shippingMethod', {
-    is: 'programado',
-    then: yup.string().max(280).required(),
-  }),
+  shippingDate: yup
+    .string()
+    .nullable()
+    .when('shippingMethod', {
+      is: 'programado',
+      then: yup
+        .string()
+        .nullable()
+        .max(280)
+        .test(
+          'hour-test',
+          `Puede programar entregas a partir de las ${addHours(
+            new Date(),
+            1,
+          ).getHours()}:${new Date().getMinutes()}`,
+          (value) =>
+            !isBefore(new Date(value), addHours(new Date(), 1)),
+        )
+        .required(),
+    }),
 });
 
 export default schema;

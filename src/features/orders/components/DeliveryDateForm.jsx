@@ -11,23 +11,19 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addDays, setHours, setMinutes } from 'date-fns';
+import { Controller } from 'react-hook-form';
 
 const DeliveryDateForm = ({
   errors,
   watch,
   clearErrors,
   setValue,
+  control,
 }) => {
   const watchShippingMethod = watch('shippingMethod');
-  const [startDate, setStartDate] = React.useState(null);
 
   const handleShippingMethodChange = (event) => {
     setValue('shippingDate', '', {
-      shouldValidate: false,
-      shouldDirty: false,
-      shouldTouch: false,
-    });
-    setValue('shippingTime', '', {
       shouldValidate: false,
       shouldDirty: false,
       shouldTouch: false,
@@ -37,11 +33,6 @@ const DeliveryDateForm = ({
     });
     clearErrors('shippingDate');
     clearErrors('shippingTime');
-  };
-
-  const handleDateChange = (date) => {
-    setStartDate(date);
-    setValue('shippingDate', date, { shouldValidate: true });
   };
 
   return (
@@ -76,26 +67,29 @@ const DeliveryDateForm = ({
             isRequired
           >
             <FormLabel>Fecha</FormLabel>
-            <DatePicker
-              selected={startDate}
-              onChange={handleDateChange}
-              minDate={new Date()}
-              maxDate={addDays(new Date(), 7)}
-              placeholderText="Ingrese una fecha"
-              timeInputLabel="Hora:"
-              dateFormat="dd/MM/yyyy h:mm aa"
-              minTime={setHours(
-                setMinutes(new Date(), 0),
-                new Date().getHours() + 1,
+            <Controller
+              control={control}
+              name="shippingDate"
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  minDate={new Date()}
+                  maxDate={addDays(new Date(), 7)}
+                  placeholderText="Ingrese una fecha"
+                  timeInputLabel="Hora:"
+                  dateFormat="dd/MM/yyyy h:mm aa"
+                  minTime={setHours(setMinutes(new Date(), 0), 8)}
+                  maxTime={setHours(setMinutes(new Date(), 59), 23)}
+                  showTimeSelect
+                  isClearable
+                  timeIntervals={1}
+                />
               )}
-              maxTime={setHours(setMinutes(new Date(), 59), 23)}
-              showTimeSelect
-              isClearable
-              timeIntervals={1}
             />
             <FormErrorMessage>
               {errors?.shippingDate?.message
-                ? 'Debe ingresar una fecha de envio'
+                ? errors?.shippingDate?.message
                 : false}
             </FormErrorMessage>
           </FormControl>
@@ -106,6 +100,7 @@ const DeliveryDateForm = ({
 };
 
 DeliveryDateForm.propTypes = {
+  control: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   watch: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,

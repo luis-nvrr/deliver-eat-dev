@@ -22,7 +22,6 @@ import Map from './Map';
 const CFiMapPin = chakra(FiMapPin);
 
 const DestinationForm = ({ register, errors, setValue, watch }) => {
-  const [selectedCity, setSelectedCity] = React.useState('');
   const validCities = [
     {
       id: 1,
@@ -37,16 +36,6 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
       name: 'Villa Carlos Paz',
     },
   ];
-
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-  };
-
-  React.useEffect(() => {
-    setValue('destinationCity', selectedCity, {
-      shouldValidate: true,
-    });
-  }, [selectedCity]);
 
   return (
     <Stack direction="column" paddingY={3} paddingX={6} spacing={3}>
@@ -101,8 +90,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
           <FormLabel>Ciudad</FormLabel>
           <Select
             placeholder="Elija una ciudad"
-            onChange={handleCityChange}
-            value={selectedCity}
+            {...register('destinationCity')}
           >
             {validCities.map((city) => (
               <option key={city.id} value={city.name}>
@@ -146,11 +134,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
           </FormErrorMessage>
         </FormControl>
         <AspectRatio ratio={16 / 9} w={[280, 400, 500]}>
-          <Map
-            setValue={setValue}
-            watch={watch}
-            setSelectedCity={setSelectedCity}
-          />
+          <Map setValue={setValue} watch={watch} />
         </AspectRatio>
       </Stack>
     </Stack>

@@ -46,7 +46,7 @@ const findClosestMatch = (data) => {
   return sorted[0].city;
 };
 
-const Map = ({ setValue, watch, setSelectedCity }) => {
+const Map = ({ setValue, watch }) => {
   const center = { lat: -31.427556, lng: -64.1882 };
   const [marker, setMarker] = React.useState(center);
   const street = watch('destinationStreet');
@@ -86,7 +86,9 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
     setValue('destinationNumber', responseNumber, {
       shouldValidate: true,
     });
-    setSelectedCity(closestMatchCity);
+    setValue('destinationCity', closestMatchCity, {
+      shouldValidate: true,
+    });
   };
 
   React.useEffect(async () => {
@@ -95,7 +97,6 @@ const Map = ({ setValue, watch, setSelectedCity }) => {
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyD1nHGlzuM_MajZHaLP5yFUks0wjGMZ9kI`,
     );
 
-    console.log(response);
     if (response.data.results === 0) return;
     const { lat, lng } = response.data.results[0].geometry.location;
 
@@ -116,7 +117,6 @@ MyMap.propTypes = {
 Map.propTypes = {
   setValue: PropTypes.func.isRequired,
   watch: PropTypes.func.isRequired,
-  setSelectedCity: PropTypes.func.isRequired,
 };
 
 export default Map;

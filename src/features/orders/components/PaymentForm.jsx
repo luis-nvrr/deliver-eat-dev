@@ -19,6 +19,7 @@ import { SiCashapp } from 'react-icons/si';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addYears } from 'date-fns';
+import { Controller } from 'react-hook-form';
 
 const CSiCashapp = chakra(SiCashapp);
 const CFaCcVisa = chakra(FaCcVisa);
@@ -30,18 +31,12 @@ const PaymentForm = ({
   errors,
   watch,
   clearErrors,
+  control,
   setValue,
 }) => {
   const watchPaymentMethod = watch('paymentMethod');
-  const [startDate, setStartDate] = React.useState(null);
-
-  const handleDateChange = (date) => {
-    setStartDate(date);
-    setValue('expirationDate', date, { shouldValidate: true });
-  };
-
   const handlePaymentMethodChange = (event) => {
-    setValue('paymentAmount', '', {
+    setValue('paymentAmount', null, {
       shouldValidate: false,
       shouldDirty: false,
       shouldTouch: false,
@@ -190,16 +185,23 @@ const PaymentForm = ({
             isRequired
           >
             <FormLabel>Fecha de vencimiento</FormLabel>
-            <DatePicker
-              selected={startDate}
-              onChange={handleDateChange}
-              minDate={new Date()}
-              maxDate={addYears(new Date(), 50)}
-              placeholderText="Seleccione una fecha"
-              dateFormat="dd/MM/yyyy"
-              isClearable
-              showYearDropdown
+            <Controller
+              control={control}
+              name="expirationDate"
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  minDate={new Date()}
+                  maxDate={addYears(new Date(), 50)}
+                  placeholderText="Seleccione una fecha"
+                  dateFormat="dd/MM/yyyy"
+                  isClearable
+                  showYearDropdown
+                />
+              )}
             />
+
             <FormErrorMessage>
               {errors?.expirationDate?.message
                 ? errors?.expirationDate?.message
@@ -238,6 +240,7 @@ PaymentForm.propTypes = {
   watch: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   setValue: PropTypes.func.isRequired,
+  control: PropTypes.object.isRequired,
 };
 
 export default PaymentForm;

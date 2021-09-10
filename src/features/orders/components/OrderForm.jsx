@@ -28,6 +28,8 @@ const OrderForm = () => {
     formState: { errors },
     setValue,
     watch,
+    control,
+    trigger,
     clearErrors,
   } = useForm({
     mode: 'onChange',
@@ -123,9 +125,11 @@ const OrderForm = () => {
               watch={watch}
               clearErrors={clearErrors}
               setValue={setValue}
+              control={control}
             />
             <Divider />
             <DeliveryDateForm
+              control={control}
               errors={errors}
               watch={watch}
               setValue={setValue}
