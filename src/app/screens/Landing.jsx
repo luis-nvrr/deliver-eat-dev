@@ -72,7 +72,7 @@ const Landing = () => {
                 >
                   <Text fontSize="md" color="gray.500">
                     <Link
-                      href="https://github.com/luis-nvrr"
+                      href="https://github.com/luis-nvrr/ISW-G7"
                       isExternal
                     >
                       Ver en Github <ExternalLinkIcon mx="2px" />
