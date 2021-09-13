@@ -58,7 +58,7 @@ const OriginForm = ({ register, errors }) => {
           </InputLeftElement>
           <Input
             type="text"
-            placeholder="Avenida siempre viva"
+            placeholder="25 de mayo"
             {...register('originStreet')}
           />
         </InputGroup>
@@ -76,7 +76,7 @@ const OriginForm = ({ register, errors }) => {
         <FormLabel>Numero</FormLabel>
         <Input
           type="number"
-          placeholder="521"
+          placeholder="998"
           {...register('originNumber')}
         />
         <FormErrorMessage>

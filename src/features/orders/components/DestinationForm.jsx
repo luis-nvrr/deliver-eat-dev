@@ -56,7 +56,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
             </InputLeftElement>
             <Input
               type="text"
-              placeholder="Avenida falsa"
+              placeholder="Obispo trejo"
               {...register('destinationStreet')}
             />
           </InputGroup>
@@ -74,7 +74,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
           <FormLabel>Numero</FormLabel>
           <Input
             type="number"
-            placeholder="123"
+            placeholder="239"
             {...register('destinationNumber')}
           />
           <FormErrorMessage>
@@ -117,7 +117,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
             alignItems="flex-end"
             justifyContent="flex-end"
           >
-            <FormHelperText>max 280 caracteres</FormHelperText>
+            <FormHelperText>máx 280 caracteres</FormHelperText>
           </Stack>
         </FormControl>
       </Stack>
