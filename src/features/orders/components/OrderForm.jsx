@@ -29,7 +29,6 @@ const OrderForm = () => {
     setValue,
     watch,
     control,
-    trigger,
     clearErrors,
   } = useForm({
     mode: 'onChange',

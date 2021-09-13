@@ -1,15 +1,12 @@
+/* eslint-disable react/forbid-prop-types */
+import PropTypes from 'prop-types';
 import React from 'react';
-
 import {
   Button,
-  Center,
   Divider,
-  Flex,
   Heading,
   Stack,
-  useToast,
   Text,
-  Box,
   IconButton,
 } from '@chakra-ui/react';
 import { FcCancel } from 'react-icons/fc';
@@ -152,5 +149,11 @@ const Confirmation = ({
     </Button>
   </Stack>
 );
+
+Confirmation.propTypes = {
+  data: PropTypes.object.isRequired,
+  handleConfimationClick: PropTypes.func.isRequired,
+  handleCancelClick: PropTypes.func.isRequired,
+};
 
 export default Confirmation;
