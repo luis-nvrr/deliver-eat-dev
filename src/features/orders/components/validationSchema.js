@@ -57,7 +57,7 @@ const schema = yup.object().shape({
     .string()
     .min(5, 'El mínimo es 5 caracteres')
     .max(280, 'El máximo es de 280 caracteres')
-    .required(),
+    .required('La descripción es requerida'),
   image: yup
     .mixed()
     .test('file-format', 'El formato soportado es .jpg', (value) =>
@@ -68,14 +68,13 @@ const schema = yup.object().shape({
     ),
   originStreet: yup
     .string()
-    .min(5, 'El mínimo es 3 caracteres')
     .max(280, 'El máximo es de 280 caracteres')
-    .required(),
+    .required('La calle de entrega es requerida'),
   originNumber: yup
     .number()
     .typeError('Debe especificar un número')
     .positive('El número tiene que ser positivo')
-    .required(),
+    .required('El número es requerido'),
   originCity: yup
     .string()
     .max(
@@ -86,7 +85,6 @@ const schema = yup.object().shape({
   originReference: yup.string().max(280),
   destinationStreet: yup
     .string()
-    .min(3, 'El mínimo es 3 caracteres')
     .max(280, 'El máximo es de 280 caracteres')
     .required('La ciudad es requerida'),
   destinationNumber: yup
@@ -159,7 +157,7 @@ const schema = yup.object().shape({
         'El CVC ingresado no es válido',
         (value) => valid.cvv(value).isValid,
       )
-      .required(),
+      .required('El CVC es requerido'),
   }),
   shippingMethod: yup.string().max(280).required(),
   shippingDate: yup
@@ -180,7 +178,7 @@ const schema = yup.object().shape({
           (value) =>
             !isBefore(new Date(value), addHours(new Date(), 1)),
         )
-        .required(),
+        .required('La fecha de envio es requerida'),
     }),
 });
 

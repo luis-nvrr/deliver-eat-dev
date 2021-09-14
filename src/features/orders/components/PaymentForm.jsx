@@ -84,9 +84,9 @@ const PaymentForm = ({
       direction="column"
       alignItems="flex-start"
       justifyContent="flex-start"
-      paddingY={1}
+      paddingY={3}
       paddingX={6}
-      marginBottom={2}
+      spacing={3}
     >
       <Heading fontSize={[20, 22, 25]} color="gray.500">
         Sobre el pago
@@ -141,7 +141,7 @@ const PaymentForm = ({
             errortext={errors?.cardNumber?.message}
             isRequired
           >
-            <FormLabel>Numero de tarjeta</FormLabel>
+            <FormLabel>Número de tarjeta</FormLabel>
             <InputGroup>
               <InputLeftElement pointerEvents="none" color="gray.300">
                 <CFaCcVisa color="gray.500" />
@@ -193,12 +193,11 @@ const PaymentForm = ({
                 <DatePicker
                   selected={field.value}
                   onChange={(date) => field.onChange(date)}
-                  minDate={new Date()}
+                  minDate={addYears(new Date(), 0)}
                   maxDate={addYears(new Date(), 50)}
-                  placeholderText="Seleccione una fecha"
-                  dateFormat="dd/MM/yyyy"
+                  dateFormat="MM/yyyy"
                   isClearable
-                  showYearDropdown
+                  showMonthYearPicker
                 />
               )}
             />

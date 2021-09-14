@@ -48,7 +48,7 @@ const DeliveryDateForm = ({
       >
         <FormLabel>¿Cuando desea recibirlo?</FormLabel>
         <Select
-          placeholder="Selecciona una opción"
+          placeholder="Seleccione una forma de envío"
           onChange={handleShippingMethodChange}
         >
           <option value="rapido">Lo antes posible</option>

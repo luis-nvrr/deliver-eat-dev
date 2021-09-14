@@ -71,7 +71,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
           errortext={errors?.destinationNumber?.message}
           isRequired
         >
-          <FormLabel>Numero</FormLabel>
+          <FormLabel>Número</FormLabel>
           <Input
             type="number"
             placeholder="239"
@@ -122,7 +122,7 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
         </FormControl>
       </Stack>
 
-      <Stack direction="column" paddingY={3}>
+      <Stack direction="column">
         <FormControl
           isInvalid={Boolean(errors?.mapSelectionAddress?.message)}
           errortext={errors?.mapSelectionAddress?.message}

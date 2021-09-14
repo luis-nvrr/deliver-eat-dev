@@ -98,7 +98,6 @@ const Confirmation = ({
           <Text fontSize={[17, 17, 20]}>{data.cardOwner}</Text>
           <Text color="primary.400">Fecha de vencimiento</Text>
           <Text fontSize={[17, 17, 20]}>
-            {new Date(data.expirationDate).getDate()}/
             {new Date(data.expirationDate).getMonth()}/
             {new Date(data.expirationDate).getUTCFullYear()}
           </Text>

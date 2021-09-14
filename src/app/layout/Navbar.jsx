@@ -64,7 +64,7 @@ const Navbar = () => {
               w={[20, 20, 40]}
             >
               <Icon as={FaUser} w={[0, 6, 6]} h={[0, 10, 10]} />
-              <Text fontWeight="500" fontSize={[15, 20, 20]}>
+              <Text fontWeight="500" fontSize={[15, 15, 20]}>
                 {user?.name}
               </Text>
             </Stack>

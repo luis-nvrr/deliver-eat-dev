@@ -73,7 +73,7 @@ const OriginForm = ({ register, errors }) => {
         errortext={errors?.originNumber?.message}
         isRequired
       >
-        <FormLabel>Numero</FormLabel>
+        <FormLabel>Número</FormLabel>
         <Input
           type="number"
           placeholder="998"
