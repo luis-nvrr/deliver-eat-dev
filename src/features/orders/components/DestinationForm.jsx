@@ -16,6 +16,7 @@ import {
 import React from 'react';
 import { FiMapPin } from 'react-icons/fi';
 import { useFormContext } from 'react-hook-form';
+import useComponentDidMount from '~/utils/utils';
 
 import Map from './Map';
 
@@ -27,7 +28,19 @@ const DestinationForm = () => {
     formState: { errors },
     setValue,
     watch,
+    trigger,
   } = useFormContext();
+
+  const destinationCity = watch('destinationCity');
+
+  const isComponentMounted = useComponentDidMount();
+
+  React.useEffect(() => {
+    if (isComponentMounted) {
+      trigger('originCity');
+    }
+  }, [destinationCity]);
+
   const validCities = [
     {
       id: 1,

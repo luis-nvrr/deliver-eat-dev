@@ -17,6 +17,7 @@ import React from 'react';
 
 import { FiMapPin } from 'react-icons/fi';
 import { useFormContext } from 'react-hook-form';
+import useComponentDidMount from '~/utils/utils';
 
 const CFiMapPin = chakra(FiMapPin);
 
@@ -24,7 +25,19 @@ const OriginForm = () => {
   const {
     register,
     formState: { errors },
+    watch,
+    trigger,
   } = useFormContext();
+
+  const originCity = watch('originCity');
+
+  const isComponentMounted = useComponentDidMount();
+
+  React.useEffect(() => {
+    if (isComponentMounted) {
+      trigger('destinationCity');
+    }
+  }, [originCity]);
 
   const validCities = [
     {
