@@ -9,7 +9,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from './validationSchema';
 
@@ -22,15 +22,7 @@ import DeliveryDateForm from './DeliveryDateForm';
 import PaymentForm from './PaymentForm';
 
 const OrderForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-    control,
-    clearErrors,
-  } = useForm({
+  const methods = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
@@ -94,57 +86,36 @@ const OrderForm = () => {
           paddingX={[3, 10, 20]}
           paddingY={10}
         >
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
-            <Heading
-              paddingX={6}
-              fontSize={[25, 30, 30]}
-              color="black.500"
-            >
-              Pedido de lo que sea
-            </Heading>
-            <ProductForm
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              watch={watch}
-            />
-            <Divider />
-            <OriginForm register={register} errors={errors} />
-            <Divider />
-            <DestinationForm
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              watch={watch}
-            />
-            <Divider />
-            <PaymentForm
-              register={register}
-              errors={errors}
-              watch={watch}
-              clearErrors={clearErrors}
-              setValue={setValue}
-              control={control}
-            />
-            <Divider />
-            <DeliveryDateForm
-              control={control}
-              errors={errors}
-              watch={watch}
-              setValue={setValue}
-              clearErrors={clearErrors}
-            />
-            <Center>
-              <Button
-                borderRadius="lg"
-                type="submit"
-                variant="solid"
-                colorScheme="primary"
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
+              <Heading
+                paddingX={6}
+                fontSize={[25, 30, 30]}
+                color="black.500"
               >
-                Confirmar Pedido
-              </Button>
-            </Center>
-          </form>
+                Pedido de lo que sea
+              </Heading>
+              <ProductForm />
+              <Divider />
+              <OriginForm />
+              <Divider />
+              <DestinationForm />
+              <Divider />
+              <PaymentForm />
+              <Divider />
+              <DeliveryDateForm />
+              <Center>
+                <Button
+                  borderRadius="lg"
+                  type="submit"
+                  variant="solid"
+                  colorScheme="primary"
+                >
+                  Confirmar Pedido
+                </Button>
+              </Center>
+            </form>
+          </FormProvider>
         </Stack>
         {isClicked && (
           <Flex

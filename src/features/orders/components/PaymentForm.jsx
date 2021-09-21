@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-import PropTypes from 'prop-types';
 import {
   chakra,
   FormControl,
@@ -20,21 +18,22 @@ import { SiCashapp } from 'react-icons/si';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addYears } from 'date-fns';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 const CSiCashapp = chakra(SiCashapp);
 const CFaCcVisa = chakra(FaCcVisa);
 const CBsFillPersonFill = chakra(BsFillPersonFill);
 const CImKey = chakra(ImKey);
 
-const PaymentForm = ({
-  register,
-  errors,
-  watch,
-  clearErrors,
-  control,
-  setValue,
-}) => {
+const PaymentForm = () => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+    clearErrors,
+    control,
+    setValue,
+  } = useFormContext();
   const watchPaymentMethod = watch('paymentMethod');
   const handlePaymentMethodChange = (event) => {
     setValue('paymentAmount', null, {
@@ -232,15 +231,6 @@ const PaymentForm = ({
       )}
     </Stack>
   );
-};
-
-PaymentForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  watch: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-  setValue: PropTypes.func.isRequired,
-  control: PropTypes.object.isRequired,
 };
 
 export default PaymentForm;

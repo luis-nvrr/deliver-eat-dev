@@ -16,11 +16,16 @@ import {
 import React from 'react';
 
 import { FiMapPin } from 'react-icons/fi';
-import PropTypes from 'prop-types';
+import { useFormContext } from 'react-hook-form';
 
 const CFiMapPin = chakra(FiMapPin);
 
-const OriginForm = ({ register, errors }) => {
+const OriginForm = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
   const validCities = [
     {
       id: 1,
@@ -123,11 +128,6 @@ const OriginForm = ({ register, errors }) => {
       </FormControl>
     </Stack>
   );
-};
-
-OriginForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
 };
 
 export default OriginForm;

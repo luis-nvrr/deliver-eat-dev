@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-import PropTypes from 'prop-types';
 import {
   AspectRatio,
   chakra,
@@ -17,12 +15,19 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { FiMapPin } from 'react-icons/fi';
+import { useFormContext } from 'react-hook-form';
 
 import Map from './Map';
 
 const CFiMapPin = chakra(FiMapPin);
 
-const DestinationForm = ({ register, errors, setValue, watch }) => {
+const DestinationForm = () => {
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useFormContext();
   const validCities = [
     {
       id: 1,
@@ -140,13 +145,6 @@ const DestinationForm = ({ register, errors, setValue, watch }) => {
       </Stack>
     </Stack>
   );
-};
-
-DestinationForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  setValue: PropTypes.func.isRequired,
-  watch: PropTypes.func.isRequired,
 };
 
 export default DestinationForm;

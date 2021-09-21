@@ -8,19 +8,20 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 import React from 'react';
-import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addDays, setHours, setMinutes } from 'date-fns';
-import { Controller } from 'react-hook-form';
 
-const DeliveryDateForm = ({
-  errors,
-  watch,
-  clearErrors,
-  setValue,
-  control,
-}) => {
+import { Controller, useFormContext } from 'react-hook-form';
+
+const DeliveryDateForm = () => {
+  const {
+    formState: { errors },
+    watch,
+    clearErrors,
+    setValue,
+    control,
+  } = useFormContext();
   const watchShippingMethod = watch('shippingMethod');
 
   const handleShippingMethodChange = (event) => {
@@ -98,14 +99,6 @@ const DeliveryDateForm = ({
       )}
     </Stack>
   );
-};
-
-DeliveryDateForm.propTypes = {
-  control: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  watch: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-  setValue: PropTypes.func.isRequired,
 };
 
 export default DeliveryDateForm;

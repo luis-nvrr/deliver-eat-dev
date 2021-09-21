@@ -1,5 +1,4 @@
 /* eslint-disable react/forbid-prop-types */
-import PropTypes from 'prop-types';
 import {
   AspectRatio,
   Button,
@@ -19,11 +18,18 @@ import {
 import React from 'react';
 import { FcCancel } from 'react-icons/fc';
 import { FiBox, FiImage } from 'react-icons/fi';
+import { useFormContext } from 'react-hook-form';
 
 const CFiBox = chakra(FiBox);
 const CFiImage = chakra(FiImage);
 
-const ProductForm = ({ register, errors, setValue, watch }) => {
+const ProductForm = () => {
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useFormContext();
   const image = watch('image');
 
   return (
@@ -130,13 +136,6 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
       )}
     </Stack>
   );
-};
-
-ProductForm.propTypes = {
-  register: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  setValue: PropTypes.func.isRequired,
-  watch: PropTypes.func.isRequired,
 };
 
 export default ProductForm;
