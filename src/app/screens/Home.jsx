@@ -2,7 +2,7 @@ import { Flex, Heading, Stack } from '@chakra-ui/react';
 import React from 'react';
 
 import header from '~/assets/header.png';
-import OrderForm from '~/features/orders/components/OrderForm';
+import OrderForm from '~/features/orders/components/Order/OrderForm';
 
 const HomeScreen = () => (
   <Stack flex={1} spacing={6} direction="column">
