@@ -18,7 +18,7 @@ import { FiMapPin } from 'react-icons/fi';
 import { useFormContext } from 'react-hook-form';
 import useComponentDidMount from '~/utils/utils';
 
-import Map from './Map';
+import Map from '../Map/Map';
 
 const CFiMapPin = chakra(FiMapPin);
 

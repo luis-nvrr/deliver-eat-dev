@@ -11,11 +11,11 @@ import {
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './validationSchema';
+import schema from '../validationSchema';
 
 import OriginForm from './OriginForm';
 
-import Confirmation from './Confirmation';
+import Confirmation from '../Confirmation/Confirmation';
 import ProductForm from './ProductForm';
 import DestinationForm from './DestinationForm';
 import DeliveryDateForm from './DeliveryDateForm';
