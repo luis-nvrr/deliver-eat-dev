@@ -25,68 +25,6 @@ const CFiImage = chakra(FiImage);
 
 const ProductForm = ({ register, errors, setValue, watch }) => {
   const image = watch('image');
-  const [imgData, setImgData] = React.useState(null);
-
-  const checkIfFilesAreTooBig = (file) => {
-    if (file === null || file === undefined) {
-      return false;
-    }
-
-    if (file.length === 0) {
-      return true;
-    }
-
-    const size = file.size / 1024 / 1024;
-    if (size < 5) {
-      return false;
-    }
-
-    return true;
-  };
-
-  const checkIfFilesAreCorrectType = (file) => {
-    if (file === null || file === undefined) {
-      return false;
-    }
-
-    if (file.length === 0) {
-      return true;
-    }
-
-    if (['image/jpeg'].includes(file.type)) {
-      return true;
-    }
-
-    return false;
-  };
-
-  React.useEffect(() => {
-    const previewImage = (file) => {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setImgData(reader.result);
-      });
-
-      if (checkIfFilesAreTooBig(file)) {
-        setImgData(null);
-        return;
-      }
-
-      if (!checkIfFilesAreCorrectType(file)) {
-        setImgData(null);
-        return;
-      }
-
-      reader.readAsDataURL(file);
-    };
-
-    if (image === null || image === undefined) {
-      setImgData(null);
-      return;
-    }
-
-    previewImage(image[0]);
-  }, [image]);
 
   return (
     <Stack
@@ -149,7 +87,7 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
           {errors?.image?.message ? errors?.image?.message : false}
         </FormErrorMessage>
       </FormControl>
-      {imgData && (
+      {image?.length > 0 && !errors.image?.message && (
         <Stack direction="row" position="relative">
           <Stack
             alignItems="center"
@@ -176,15 +114,14 @@ const ProductForm = ({ register, errors, setValue, watch }) => {
               w={5}
               h={5}
               onClick={() => {
-                setValue('image', undefined, {
-                  shouldValidate: false,
-                });
+                setValue('image', null, { shouldValidate: false });
               }}
             />
           </Stack>
           <AspectRatio width={['250px', '400px']} ratio={4 / 3}>
             <Image
-              src={imgData}
+              id="image"
+              src={URL.createObjectURL(image[0])}
               alt="Imagen subida"
               objectFit="cover"
             />

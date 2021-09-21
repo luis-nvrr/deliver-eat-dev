@@ -3,38 +3,26 @@ import * as yup from 'yup';
 import valid from 'card-validator';
 import { addHours, isBefore } from 'date-fns';
 
-const checkIfFilesAreTooBig = (file) => {
-  if (file === null || file === undefined) {
-    return true;
+function isSizeLessThan5MB(files) {
+  if (files?.length === 0) return true;
+  let isValid = true;
+  const size = files[0]?.size / 1024 / 1024;
+  if (size > 5) {
+    isValid = false;
   }
 
-  if (file.length === 0) {
-    return true;
+  return isValid;
+}
+
+function isTypeJPEG(files) {
+  if (files?.length === 0) return true;
+  let isValid = true;
+  if (!['image/jpeg'].includes(files[0]?.type)) {
+    isValid = false;
   }
 
-  const size = file[0].size / 1024 / 1024;
-  if (size < 5) {
-    return true;
-  }
-
-  return false;
-};
-
-const checkIfFilesAreCorrectType = (file) => {
-  if (file === null || file === undefined) {
-    return true;
-  }
-
-  if (file.length === 0) {
-    return true;
-  }
-
-  if (['image/jpeg'].includes(file[0].type)) {
-    return true;
-  }
-
-  return false;
-};
+  return isValid;
+}
 
 function equalTo(ref, msg) {
   return this.test({
@@ -60,12 +48,8 @@ const schema = yup.object().shape({
     .required('La descripción es requerida'),
   image: yup
     .mixed()
-    .test('file-format', 'El formato soportado es .jpg', (value) =>
-      checkIfFilesAreCorrectType(value),
-    )
-    .test('file-size', 'El tamaño máximo es 5MB', (value) =>
-      checkIfFilesAreTooBig(value),
-    ),
+    .test('file-format', 'El formato soportado es .jpg', isTypeJPEG)
+    .test('file-size', 'El tamaño máximo es 5MB', isSizeLessThan5MB),
   originStreet: yup
     .string()
     .max(280, 'El máximo es de 280 caracteres')
