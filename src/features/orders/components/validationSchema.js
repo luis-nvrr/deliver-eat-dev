@@ -155,10 +155,7 @@ const schema = yup.object().shape({
         .max(280)
         .test(
           'hour-test',
-          `Puede programar entregas a partir de las ${addHours(
-            new Date(),
-            1,
-          ).getHours()}:${new Date().getMinutes()}`,
+          'El tiempo mínimo de espera, para entregas programadas, es de 1 hora',
           (value) =>
             !isBefore(new Date(value), addHours(new Date(), 1)),
         )
